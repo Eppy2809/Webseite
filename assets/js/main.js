@@ -10,14 +10,60 @@
   var hasGSAP = typeof gsap !== 'undefined';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var wide = window.matchMedia('(min-width: 900px)').matches;
+  var saveData = Boolean(navigator.connection && navigator.connection.saveData);
+
+  // Alles, was dauerhaft Rechenzeit kostet — 3D-Szene, Scroll-Parallaxe,
+  // Zeiger-Effekte — läuft nur dort, wo es auch bedienbar ist. Auf dem
+  // Handy bleibt die Seite dadurch bei reinem Layout und Compositing.
+  var richMotion = !reduced && !saveData && wide;
 
   root.classList.remove('no-js');
 
-  if (hasGSAP && window.ScrollTrigger) {
-    gsap.registerPlugin(window.ScrollTrigger);
+  var animate = hasGSAP && !reduced;
+
+  /* ---------------------------------------------------------
+     ScrollTrigger nachladen
+     Das Plugin wird nur für Parallaxe und gestaffelte Reveals am
+     Desktop gebraucht — auf dem Handy übernimmt ein
+     IntersectionObserver. Kommt es nicht an, greift derselbe
+     Fallback, die Seite bleibt also in jedem Fall vollständig.
+     --------------------------------------------------------- */
+  function loadScrollTrigger(done) {
+    if (!animate || !richMotion) { done(); return; }
+
+    var tag = document.createElement('script');
+    tag.src = 'assets/vendor/ScrollTrigger.min.js';
+    tag.addEventListener('load', function () {
+      if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+      done();
+    });
+    tag.addEventListener('error', done);
+    document.head.appendChild(tag);
   }
 
-  var animate = hasGSAP && !reduced;
+  /* ---------------------------------------------------------
+     3D-Hero — nur wo er sich lohnt
+     three.js sind rund 690 KB. Statt sie in jedes Handy zu laden,
+     hängen wir das Modul erst nach, wenn die Bedingungen stimmen.
+     Browser ohne Modul-Unterstützung ignorieren den Tag von selbst.
+     --------------------------------------------------------- */
+  function initHeroScene() {
+    var canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+
+    if (!richMotion || !fine) {
+      // Ohne Szene bleibt der CSS-Verlauf des Hero stehen.
+      canvas.remove();
+      return;
+    }
+
+    var tag = document.createElement('script');
+    tag.type = 'module';
+    tag.src = 'assets/js/hero-scene.js';
+    tag.addEventListener('error', function () { canvas.remove(); });
+    document.head.appendChild(tag);
+  }
 
   /* ---------------------------------------------------------
      Reveal-Animationen
@@ -25,8 +71,9 @@
   function initReveals() {
     var items = document.querySelectorAll('.reveal');
 
-    if (!animate || !window.ScrollTrigger) {
-      // Fallback: IntersectionObserver (oder direkt sichtbar)
+    // ScrollTrigger rechnet bei jedem Scroll-Frame; auf dem Handy erledigt
+    // ein IntersectionObserver dasselbe Ergebnis ohne Dauerlast.
+    if (!animate || !window.ScrollTrigger || !richMotion) {
       if (!('IntersectionObserver' in window) || reduced) {
         items.forEach(function (el) { el.classList.add('is-visible'); });
         return;
@@ -39,6 +86,16 @@
           io.unobserve(entry.target);
         });
       }, { rootMargin: '0px 0px -12% 0px' });
+
+      // Kartengruppen laufen gestaffelt ein, damit die Reihe nicht springt.
+      ['.cards', '.pricing', '.grid', '.process'].forEach(function (sel) {
+        var group = document.querySelector(sel);
+        if (!group) return;
+        Array.prototype.forEach.call(group.children, function (kid, i) {
+          kid.dataset.delay = Math.min(i, 5) * 70;
+        });
+      });
+
       items.forEach(function (el) { io.observe(el); });
       return;
     }
@@ -99,6 +156,11 @@
       .from('.hero__stats > div', { opacity: 0, y: 18, duration: .7, stagger: .08, ease: 'power2.out' }, '-=.5')
       .from('.hero__scroll', { opacity: 0, duration: .6 }, '-=.4');
 
+    // will-change hält eine eigene Compositing-Ebene je Wort offen.
+    tl.eventCallback('onComplete', function () {
+      words.forEach(function (w) { w.style.willChange = 'auto'; });
+    });
+
     return tl;
   }
 
@@ -118,7 +180,9 @@
       onDone();
     }
 
-    if (!animate) {
+    // Ein gespielter Ladebalken ist auf dem Handy nur Verzögerung
+    // vor dem ersten Inhalt — dort startet die Seite sofort.
+    if (!animate || !richMotion) {
       if (count) count.textContent = '100';
       finish();
       return;
@@ -130,7 +194,7 @@
     gsap.timeline({ onComplete: finish })
       .to(state, {
         v: 100,
-        duration: 1.1,
+        duration: .7,
         ease: 'power2.inOut',
         onUpdate: function () {
           var v = Math.round(state.v);
@@ -269,19 +333,27 @@
     track.innerHTML += track.innerHTML; // nahtlose Wiederholung
     if (!animate) return;
 
-    gsap.to(track, {
+    var tween = gsap.to(track, {
       xPercent: -50,
       duration: 26,
       ease: 'none',
       repeat: -1
     });
+
+    // Außerhalb des Sichtfelds muss das Band nicht weiterlaufen.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) tween.play(); else tween.pause();
+      }, { threshold: 0 }).observe(track.parentNode);
+    }
   }
 
   /* ---------------------------------------------------------
      Parallax beim Scrollen
      --------------------------------------------------------- */
   function initParallax() {
-    if (!animate || !window.ScrollTrigger) return;
+    // scrub-Trigger rechnen bei jedem Scroll-Frame — auf Touch zu teuer.
+    if (!animate || !window.ScrollTrigger || !richMotion) return;
 
     gsap.to('.hero__inner', {
       // Inhalt nach oben ausblenden, damit er nicht in den folgenden Banner läuft.
@@ -310,6 +382,8 @@
      Karten: Spotlight + dezenter Tilt
      --------------------------------------------------------- */
   function initCards() {
+    if (!fine) return;
+
     document.querySelectorAll('.card').forEach(function (card) {
       card.addEventListener('pointermove', function (e) {
         var r = card.getBoundingClientRect();
@@ -382,11 +456,13 @@
       requestAnimationFrame(loop);
     })();
 
-    document.querySelectorAll('a, button, .card, .project, input, select, textarea, label')
-      .forEach(function (el) {
-        el.addEventListener('pointerenter', function () { cursor.classList.add('is-hover'); });
-        el.addEventListener('pointerleave', function () { cursor.classList.remove('is-hover'); });
-      });
+    var interactive = 'a, button, .card, .project, input, select, textarea, label';
+    document.addEventListener('pointerover', function (e) {
+      if (e.target.closest(interactive)) cursor.classList.add('is-hover');
+    }, { passive: true });
+    document.addEventListener('pointerout', function (e) {
+      if (e.target.closest(interactive)) cursor.classList.remove('is-hover');
+    }, { passive: true });
   }
 
   /* ---------------------------------------------------------
@@ -585,14 +661,22 @@
     initMagnetic();
     initCursor();
     initMarquee();
+    initHeroScene();
 
-    initPreloader(function () {
+    // Preloader und Plugin laufen parallel; die Intro startet, sobald
+    // beides fertig ist.
+    var pending = 2;
+    function ready() {
+      if (--pending) return;
       heroIntro();
       initReveals();
       initCounters();
       initParallax();
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
-    });
+    }
+
+    loadScrollTrigger(ready);
+    initPreloader(ready);
   }
 
   if (document.readyState === 'loading') {

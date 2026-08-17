@@ -2,8 +2,12 @@
    Valtro-Webdesign — Hero-Szene (Three.js)
    Dezente 3D-Ebene: Partikelschale, Draht-Ikosaeder, leichte
    Maus-Parallaxe. Läuft nur, wenn sie sichtbar ist.
+
+   Wird ausschließlich per dynamischem import() aus main.js geladen,
+   und zwar nur auf Geräten mit Zeiger und breitem Viewport. Handys
+   sparen damit die rund 690 KB von three.js komplett ein.
    ========================================================= */
-import * as THREE from 'three';
+import * as THREE from '../vendor/three.module.min.js';
 
 const canvas = document.getElementById('heroCanvas');
 const hero = document.querySelector('.hero');
@@ -36,7 +40,7 @@ function initScene() {
   scene.add(world);
 
   /* ---------- Partikelschale ---------- */
-  const COUNT = window.innerWidth < 760 ? 1400 : 2600;
+  const COUNT = 2000;
   const positions = new Float32Array(COUNT * 3);
   const seeds = new Float32Array(COUNT);
   const RADIUS = 5.1;
@@ -62,15 +66,15 @@ function initScene() {
     uTime: { value: 0 },
     uOpacity: { value: 0 },
     uSize: { value: renderer.getPixelRatio() * 2.2 },
-    uColorA: { value: new THREE.Color('#63b7ae') },
-    uColorB: { value: new THREE.Color('#d4a25f') }
+    uColorA: { value: new THREE.Color('#0f8b7d') },
+    uColorB: { value: new THREE.Color('#c8781f') }
   };
 
   const pointsMat = new THREE.ShaderMaterial({
     uniforms,
     transparent: true,
     depthWrite: false,
-    blending: THREE.AdditiveBlending,
+    blending: THREE.NormalBlending,
     vertexShader: /* glsl */`
       uniform float uTime;
       uniform float uSize;
@@ -114,7 +118,7 @@ function initScene() {
         float alpha = smoothstep(0.5, 0.05, d);
 
         vec3 color = mix(uColorA, uColorB, vSeed);
-        gl_FragColor = vec4(color, alpha * uOpacity * (0.18 + vFade * 0.82));
+        gl_FragColor = vec4(color, alpha * uOpacity * (0.25 + vFade * 0.75));
       }
     `
   });
@@ -124,7 +128,7 @@ function initScene() {
 
   /* ---------- Draht-Ikosaeder ---------- */
   const wireMat = new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#63b7ae'),
+    color: new THREE.Color('#0f8b7d'),
     wireframe: true,
     transparent: true,
     opacity: 0
@@ -135,7 +139,7 @@ function initScene() {
   const wireInner = new THREE.Mesh(
     new THREE.IcosahedronGeometry(1.7, 0),
     new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#d4a25f'),
+      color: new THREE.Color('#c8781f'),
       wireframe: true,
       transparent: true,
       opacity: 0
@@ -151,13 +155,13 @@ function initScene() {
     camera.aspect = w / h;
 
     // Auf schmalen Displays weiter weg, damit die Kugel ins Bild passt
-    camera.position.z = w < 760 ? 20 : 17;
+    camera.position.z = 17;
     camera.updateProjectionMatrix();
 
     // Szene nach rechts schieben, damit die Headline frei bleibt
     world.position.x = w < 900 ? 0 : Math.min(4.2, camera.position.z * 0.17);
     world.position.y = w < 900 ? 1.2 : 0;
-    uniforms.uSize.value = renderer.getPixelRatio() * (w < 760 ? 1.8 : 2.2);
+    uniforms.uSize.value = renderer.getPixelRatio() * 2.2;
   }
   resize();
 
@@ -200,9 +204,9 @@ function initScene() {
     // Einblenden nach dem Preloader
     fadeIn = Math.min(1, fadeIn + dt * 0.55);
     const eased = fadeIn * fadeIn * (3 - 2 * fadeIn);
-    uniforms.uOpacity.value = eased * 0.78;
-    wireMat.opacity = eased * 0.14;
-    wireInner.material.opacity = eased * 0.2;
+    uniforms.uOpacity.value = eased * 0.62;
+    wireMat.opacity = eased * 0.16;
+    wireInner.material.opacity = eased * 0.22;
 
     uniforms.uTime.value = t;
 

@@ -2,8 +2,8 @@
 
 Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
 Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
-Dunkles Graphit-Theme mit Petrol/Gold als Akzent, dezenten 3D-Elementen (Three.js) und
-scroll-gesteuerten Animationen (GSAP + ScrollTrigger).
+Helles Papier-Theme mit Petrol als Akzent und Bernstein als Wärme, dezenten 3D-Elementen
+(Three.js) und scroll-gesteuerten Animationen (GSAP + ScrollTrigger).
 
 ## Ansehen
 
@@ -50,31 +50,41 @@ assets/
     style.css               Design-Tokens, Layout, Komponenten, Breakpoints
   js/
     main.js                 Navigation, Reveals, Zähler, Formular, Cursor, Magnet-Buttons
-    hero-scene.js           Three.js-Szene im Hero (ES-Modul)
-  img/                      Projektbilder und Open-Graph-Vorschau
+    hero-scene.js           Three.js-Szene im Hero (ES-Modul, wird nachgeladen)
+  img/                      Logo, Open-Graph-Vorschau, Projektbild in drei Größen
   fonts/                    Vier woff2-Dateien (Variable Fonts, Subsets latin + latin-ext)
   vendor/                   gsap.min.js, ScrollTrigger.min.js, three.module.min.js
 ```
+
+`main.js` bindet `hero-scene.js` und `ScrollTrigger.min.js` selbst ein, sobald das Gerät
+dafür in Frage kommt — beide stehen deshalb nicht als `<script>` in der HTML.
 
 ## Design-Konzept
 
 | Rolle | Wert |
 |---|---|
-| Hintergrund | `#070a0c` → `#182328` (Graphit, mehrstufig) |
-| Text | `#f1f3ef`, gedämpft `#abb8b8` |
-| Akzent | `#63b7ae` (Petrol) → `#d4a25f` (warmes Gold) |
+| Flächen | Seite `#fdfbf7` (warmes Papier), Karten `#ffffff`, Tönung `#f6f2ea` |
+| Text | `#1d2624`, gedämpft `#4f5c58`, zurückgenommen `#63716c` |
+| Akzent | `#0d7d70` (Petrol) für Flächen, `#0a6157` für Text |
+| Zweitakzent | `#e0913f` (Bernstein) für Flächen, `#9c5f12` für Text |
 | Display-Schrift | Space Grotesk (Headlines, Zahlen, Buttons) |
 | Fließtext | Inter |
+
+Die Flächen heißen `--surface-0` bis `--surface-4`: 0 ist die Seite, aufsteigend liegt es
+weiter oben. Jede Farbe, die Text trägt, erreicht auf Papier mindestens 4.5:1 — deshalb gibt
+es zu beiden Akzenten eine dunklere `-ink`-Variante: `--accent` füllt eine Fläche,
+`--accent-ink` schreibt darauf. Tiefe entsteht über weiche warme Schatten
+(`--shadow-sm/-md/-lg`) statt über harte Kanten.
 
 Typografie und Abstände skalieren über `clamp()`-Tokens mit dem Viewport, das Layout ist
 mobile-first aufgebaut (Breakpoints bei 640 px und 900 px).
 
 ## Interaktion
 
-- **Hero-3D** (`hero-scene.js`): Partikelschale aus ~2.600 Punkten in Fibonacci-Verteilung mit
+- **Hero-3D** (`hero-scene.js`): Partikelschale aus ~2.000 Punkten in Fibonacci-Verteilung mit
   eigenem Shader (sanftes „Atmen", Tiefenabblendung, Funkeln), dazu zwei Draht-Ikosaeder und
   leichte Maus-Parallaxe. Rendert nur, wenn der Hero sichtbar und der Tab aktiv ist;
-  Pixel-Ratio ist auf 2 begrenzt, auf schmalen Displays werden weniger Partikel erzeugt.
+  Pixel-Ratio ist auf 2 begrenzt. **Läuft ausschließlich am Desktop**, siehe Performance.
 - **GSAP**: Preloader-Zähler, wortweise einlaufende Headline, gestaffelte Reveals per
   ScrollTrigger, Parallaxe auf Hero und Projektbildern, Endlos-Laufband, magnetische Buttons,
   Zähler in der Hero-Statistik.
@@ -82,6 +92,29 @@ mobile-first aufgebaut (Breakpoints bei 640 px und 900 px).
   IntersectionObserver, bei komplett deaktiviertem JavaScript ist alles sofort sichtbar
   (`.no-js`-Klasse am `<html>`).
 - **`prefers-reduced-motion`**: schaltet Animationen und die 3D-Szene ab.
+
+## Performance
+
+Auf dem Handy zählt jedes Kilobyte und jeder Scroll-Frame. Die Seite lädt und rechnet deshalb
+nach Gerät gestaffelt — entschieden wird nicht über die Bildschirmbreite allein, sondern über
+Zeigerart, Viewport, `prefers-reduced-motion` und `navigator.connection.saveData`:
+
+| | Handy / Touch | Desktop |
+|---|---|---|
+| three.js (671 KB) | wird nicht geladen | als `<script type="module">` nachgehängt |
+| ScrollTrigger (42 KB) | wird nicht geladen | von `main.js` nachgeladen |
+| Reveals | IntersectionObserver | ScrollTrigger, gestaffelt |
+| Scroll-Parallaxe (`scrub`) | aus | an |
+| Karten-Spotlight & Tilt | aus | an |
+| Preloader | übersprungen | 0,7 s |
+| `backdrop-filter` auf fixierten Leisten | aus | an |
+
+Ergebnis: **rund 280 KB auf dem Handy** statt gut 1 MB, und beim Scrollen bleibt dort im
+Wesentlichen Layout und Compositing übrig. Ohne die 3D-Szene trägt der CSS-Verlauf den Hero
+weiter — es fehlt nichts, es ist nur ruhiger.
+
+Das Projektbild liegt in drei Größen vor und wird per `srcset`/`sizes` gewählt
+(700 px ≈ 16 KB, 1200 px ≈ 32 KB, Original 1712 px ≈ 127 KB).
 
 ## Barrierefreiheit
 
@@ -104,9 +137,10 @@ Beim ersten echten Absenden verschickt FormSubmit eine Aktivierungs-E-Mail an
 
 1. **Formular aktivieren**: Einmal absenden und den Bestätigungslink in der Aktivierungs-E-Mail
    an `kontakt@valtro.cloud` anklicken.
-2. **Projektbild Valtro Pay**: Das eingebundene Bild liegt unter
-   **`assets/img/valtro-pay.jpg`** und wird unterhalb des sichtbaren Bereichs verzögert geladen.
-   Bei einem Austausch dieselbe dunkle Bildwirkung und ein Seitenverhältnis nahe 3:2 beibehalten.
+2. **Projektbild Valtro Pay**: Das Bild liegt als `valtro-pay.jpg` (Original),
+   `valtro-pay-1200.jpg` und `valtro-pay-700.jpg` in `assets/img/` und wird unterhalb des
+   sichtbaren Bereichs verzögert geladen. Bei einem Austausch alle drei Größen neu erzeugen,
+   die dunkle Bildwirkung und ein Seitenverhältnis nahe 3:2 beibehalten.
 3. **Weitere Projekte** erst nach echter Veröffentlichung ergänzen; derzeit wird ausschließlich
    Valtro Pay als Live-Referenz gezeigt.
 4. **Domain** in Canonical, Open-Graph-Metadaten, `robots.txt` und `sitemap.xml` prüfen.

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Valtro-Webdesign — Webdesign aus Wadgassen</title>
 <meta name="description" content="Valtro-Webdesign aus Wadgassen: Webseiten, Online-Shops, Web-Apps, Logo-Design sowie Unterstützung bei Hostinger, WordPress und Website-Pflege.">
-<meta name="theme-color" content="#070a0c">
+<meta name="theme-color" content="#fdfbf7">
 <meta name="author" content="Valtro-Webdesign">
 <link rel="canonical" href="https://valtro-webdesign.de/">
 
@@ -23,12 +23,12 @@
 <meta name="twitter:description" content="Individuelle Webseiten, Online-Shops, Web-Apps und Logos aus dem Saarland.">
 <meta name="twitter:image" content="https://valtro-webdesign.de/assets/img/valtro-webdesign-og.png">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230c1114'/%3E%3Cpath d='M24 30l26 42 26-42' fill='none' stroke='%2363b7ae' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23fdfbf7'/%3E%3Cpath d='M24 30l26 42 26-42' fill='none' stroke='%230d7d70' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
 <link rel="preload" href="assets/fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
-<link rel="stylesheet" href="assets/css/style.css?v=20260817-2">
+<link rel="stylesheet" href="assets/css/style.css?v=20260818-light">
 
 <script type="application/ld+json">
 {
@@ -73,7 +73,7 @@
 <header class="nav" id="nav">
   <div class="shell nav__inner">
     <a class="logo" href="#start" aria-label="Valtro-Webdesign, zur Startseite">
-      <img class="logo__image" src="assets/img/valtro-webdesign-logo.svg?v=20260817-3" alt="">
+      <img class="logo__image" src="assets/img/valtro-webdesign-logo.svg?v=20260818-light" alt="">
     </a>
 
     <nav class="nav__links" id="navLinks" aria-label="Hauptnavigation">
@@ -425,7 +425,12 @@
            target="_blank" rel="noopener" data-visual="pay">
           <div class="project__media" aria-hidden="true">
             <span class="project__art">
-              <img src="assets/img/valtro-pay.jpg" alt="" width="1712" height="1152" loading="lazy" decoding="async">
+              <img src="assets/img/valtro-pay-1200.jpg"
+                   srcset="assets/img/valtro-pay-700.jpg 700w,
+                           assets/img/valtro-pay-1200.jpg 1200w,
+                           assets/img/valtro-pay.jpg 1712w"
+                   sizes="(min-width: 900px) 860px, 100vw"
+                   alt="" width="1200" height="807" loading="lazy" decoding="async">
             </span>
           </div>
           <div class="project__body">
@@ -622,7 +627,7 @@
   <div class="shell">
     <div class="footer__top">
       <a class="logo logo--footer" href="#start">
-        <img class="logo__image" src="assets/img/valtro-webdesign-logo.svg?v=20260817-3" alt="Valtro Webdesign">
+        <img class="logo__image" src="assets/img/valtro-webdesign-logo.svg?v=20260818-light" alt="Valtro Webdesign">
       </a>
       <p class="footer__claim">Webseiten, Shops, Web-Apps und Logos — inklusive Unterstützung bei Hostinger, WordPress und Pflege.</p>
     </div>
@@ -676,16 +681,7 @@
   </div>
 </footer>
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "./assets/vendor/three.module.min.js"
-  }
-}
-</script>
 <script src="assets/vendor/gsap.min.js" defer></script>
-<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-<script src="assets/js/main.js?v=20260817-2" defer></script>
-<script type="module" src="assets/js/hero-scene.js"></script>
+<script src="assets/js/main.js?v=20260818-light" defer></script>
 </body>
 </html>
