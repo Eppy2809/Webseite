@@ -821,12 +821,17 @@ h1, h2, h3, h4, h5 {
     radial-gradient(100% 90% at 80% 30%, rgba(99, 102, 241, .42), transparent 60%),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 20px);
 }
+/* Valtro Pay: angedeuteter QR-Code — Eckmarken und ein paar Module.
+   Bewusst unvollständig, es soll nach QR aussehen, nicht scanbar sein. */
 [data-visual="pay"] .project__art {
   background-image:
-    radial-gradient(95% 85% at 25% 20%, rgba(34, 211, 238, .6), transparent 62%),
-    radial-gradient(110% 95% at 85% 85%, rgba(79, 70, 229, .55), transparent 62%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .06) 0 1px, transparent 1px 26px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, .06) 0 1px, transparent 1px 26px);
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='white' fill-opacity='.9'><g fill='none' stroke='white' stroke-opacity='.9' stroke-width='5'><rect x='8.5' y='8.5' width='23' height='23' rx='5'/><rect x='68.5' y='8.5' width='23' height='23' rx='5'/><rect x='8.5' y='68.5' width='23' height='23' rx='5'/></g><rect x='16' y='16' width='8' height='8' rx='2'/><rect x='76' y='16' width='8' height='8' rx='2'/><rect x='16' y='76' width='8' height='8' rx='2'/><rect x='44' y='8' width='8' height='8' rx='2'/><rect x='44' y='24' width='8' height='8' rx='2'/><rect x='56' y='40' width='8' height='8' rx='2'/><rect x='40' y='44' width='8' height='8' rx='2'/><rect x='24' y='44' width='8' height='8' rx='2'/><rect x='8' y='44' width='8' height='8' rx='2'/><rect x='72' y='52' width='8' height='8' rx='2'/><rect x='44' y='60' width='8' height='8' rx='2'/><rect x='60' y='68' width='8' height='8' rx='2'/><rect x='76' y='68' width='8' height='8' rx='2'/><rect x='44' y='84' width='8' height='8' rx='2'/><rect x='60' y='84' width='8' height='8' rx='2'/><rect x='84' y='84' width='8' height='8' rx='2'/></svg>"),
+    radial-gradient(95% 85% at 25% 20%, rgba(34, 211, 238, .58), transparent 62%),
+    radial-gradient(110% 95% at 85% 85%, rgba(79, 70, 229, .5), transparent 62%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 46% auto, cover, cover;
+  background-blend-mode: soft-light, screen, normal;
 }
 
 .project__body {
