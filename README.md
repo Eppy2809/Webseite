@@ -7,12 +7,40 @@ scroll-gesteuerten Animationen (GSAP + ScrollTrigger).
 ## Ansehen
 
 Es ist reines HTML/CSS/JS — kein Build-Schritt, keine Abhängigkeiten zur Laufzeit.
-Wegen der ES-Module (`importmap`) muss die Seite über einen Server laufen, nicht per `file://`:
+
+> **Wichtig:** Die Seite muss über einen Webserver laufen. Ein Doppelklick auf `index.html`
+> (`file://`) reicht nicht: Der Browser blockiert dort ES-Module und Schriftdateien, dadurch
+> bleibt der 3D-Hero leer und die Typografie fällt auf Systemschriften zurück. Layout,
+> Animationen und Formular funktionieren, der Rest sieht falsch aus.
+
+### In VS Code
+
+Das Repository klonen und den Ordner in VS Code öffnen — die Einstellungen unter `.vscode/`
+sind bereits eingerichtet. Zwei Wege:
+
+**Live Server** (empfohlen, lädt bei jedem Speichern neu)
+
+1. VS Code schlägt beim Öffnen die Erweiterung *Live Server* vor → installieren.
+2. Unten rechts in der Statusleiste auf **Go Live** klicken
+   (oder Rechtsklick auf `index.html` → *Open with Live Server*).
+3. Der Browser öffnet sich auf <http://localhost:5500>.
+
+**Ohne Erweiterung**
+
+Menü *Terminal → Task ausführen…* → **Website starten**. Das startet einen Python-Webserver
+auf <http://localhost:8000>; beenden mit `Strg+C` im Terminal.
+
+Zum Debuggen liegen unter *Ausführen und Debuggen* (`F5`) zwei fertige Konfigurationen —
+damit lassen sich Haltepunkte direkt in `main.js` und `hero-scene.js` setzen.
+
+### Ohne VS Code
 
 ```bash
 python3 -m http.server 8000
 # → http://localhost:8000
 ```
+
+### Veröffentlichen
 
 Zum Deployen genügt es, den Ordnerinhalt auf einen beliebigen Webspace zu kopieren
 (oder GitHub Pages / Netlify / Vercel auf das Repository zeigen zu lassen).
@@ -21,6 +49,7 @@ Zum Deployen genügt es, den Ordnerinhalt auf einen beliebigen Webspace zu kopie
 
 ```
 index.html                  Gesamte Seite (Nav, Hero, Leistungen, Projekte, Kontakt, Footer)
+.vscode/                    Live-Server-, Task- und Debug-Konfiguration für VS Code
 assets/
   css/
     fonts.css               @font-face für Inter & Space Grotesk

@@ -1,0 +1,31 @@
+{
+  // --- Live Server ---------------------------------------------------------
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.donotShowInfoMsg": true,
+  // Neu laden, sobald eine Datei gespeichert wird
+  "liveServer.settings.fullReload": true,
+
+  // --- Editor --------------------------------------------------------------
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+
+  // Die mitgelieferten Bibliotheken sind Fremdcode — aus Suche und
+  // Editor-Prüfungen heraushalten, damit die Suche brauchbar bleibt.
+  "search.exclude": {
+    "assets/vendor": true,
+    "assets/fonts": true
+  },
+  "files.watcherExclude": {
+    "**/assets/vendor/**": true
+  },
+
+  // three.js wird über eine Importmap geladen; ohne node_modules kann die
+  // JS-Sprachunterstützung den Import nicht auflösen — Meldung abschalten.
+  "javascript.validate.enable": false
+}
