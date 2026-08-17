@@ -109,6 +109,10 @@ Zeigerart, Viewport, `prefers-reduced-motion` und `navigator.connection.saveData
 | Preloader | übersprungen | 0,7 s |
 | `backdrop-filter` auf fixierten Leisten | aus | an |
 
+Das Laufband läuft bewusst überall durch, ohne Sichtbarkeits-Pause: eine solche Pause blieb
+auf iOS beim Momentum-Scrollen gelegentlich hängen. Sie spart auch nichts — im
+Hintergrund-Tab hält der Browser `requestAnimationFrame` von selbst an.
+
 Ergebnis: **rund 280 KB auf dem Handy** statt gut 1 MB, und beim Scrollen bleibt dort im
 Wesentlichen Layout und Compositing übrig. Ohne die 3D-Szene trägt der CSS-Verlauf den Hero
 weiter — es fehlt nichts, es ist nur ruhiger.

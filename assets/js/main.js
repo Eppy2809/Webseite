@@ -333,19 +333,19 @@
     track.innerHTML += track.innerHTML; // nahtlose Wiederholung
     if (!animate) return;
 
-    var tween = gsap.to(track, {
+    // Läuft bewusst ohne Sichtbarkeits-Pause: eine IntersectionObserver-
+    // Pause blieb auf iOS gelegentlich hängen — beim Momentum-Scrollen traf
+    // ein verspätetes "nicht sichtbar" ein, während das Band schon im Bild
+    // stand, und danach kam kein Callback mehr, der es wieder gestartet
+    // hätte. Der Verzicht kostet nichts: im Hintergrund-Tab hält der Browser
+    // requestAnimationFrame ohnehin an, sichtbar ist es eine einzige
+    // Transform-Änderung pro Frame.
+    gsap.to(track, {
       xPercent: -50,
       duration: 26,
       ease: 'none',
       repeat: -1
     });
-
-    // Außerhalb des Sichtfelds muss das Band nicht weiterlaufen.
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) tween.play(); else tween.pause();
-      }, { threshold: 0 }).observe(track.parentNode);
-    }
   }
 
   /* ---------------------------------------------------------
