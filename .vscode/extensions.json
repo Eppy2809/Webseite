@@ -1,6 +1,0 @@
-{
-  // Beim Öffnen des Projekts schlägt VS Code diese Erweiterungen zur Installation vor.
-  "recommendations": [
-    "ritwickdey.liveserver"
-  ]
-}
