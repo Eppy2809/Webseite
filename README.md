@@ -2,17 +2,18 @@
 
 Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
 Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
-Helles Papier-Theme mit Petrol als Akzent und Bernstein als Wärme, dezenten 3D-Elementen
-(Three.js) und scroll-gesteuerten Animationen (GSAP + ScrollTrigger).
+Helles Papier-Theme mit Petrol als Akzent und Bernstein als Wärme, Serifen-Überschriften
+und einem dunklen Band als Kontrastanker. Ohne Fremdbibliothek: reines HTML, CSS und
+rund 340 Zeilen JavaScript.
 
 ## Ansehen
 
 Es ist reines HTML/CSS/JS — kein Build-Schritt, keine Abhängigkeiten zur Laufzeit.
 
 > **Wichtig:** Die Seite muss über einen Webserver laufen. Ein Doppelklick auf `index.html`
-> (`file://`) reicht nicht: Der Browser blockiert dort ES-Module und Schriftdateien, dadurch
-> bleibt der 3D-Hero leer und die Typografie fällt auf Systemschriften zurück. Layout,
-> Animationen und Formular funktionieren, der Rest sieht falsch aus.
+> (`file://`) reicht nicht: Der Browser blockiert dort die Schriftdateien, die Typografie
+> fällt auf Systemschriften zurück. Layout, Formular und Reveals funktionieren, aber der
+> Satz sieht falsch aus.
 
 ### Lokal starten
 
@@ -46,18 +47,16 @@ robots.txt                  Freigaben für Suchmaschinen-Crawler
 sitemap.xml                 Sitemap für Suchmaschinen
 assets/
   css/
-    fonts.css               @font-face für Inter & Space Grotesk
+    fonts.css               @font-face für Fraunces & Inter
     style.css               Design-Tokens, Layout, Komponenten, Breakpoints
   js/
-    main.js                 Navigation, Reveals, Zähler, Formular, Cursor, Magnet-Buttons
-    hero-scene.js           Three.js-Szene im Hero (ES-Modul, wird nachgeladen)
+    main.js                 Navigation, Reveals, Formularprüfung, Countdown
   img/                      Logo, Open-Graph-Vorschau, Projektbild in drei Größen
   fonts/                    Vier woff2-Dateien (Variable Fonts, Subsets latin + latin-ext)
-  vendor/                   gsap.min.js, ScrollTrigger.min.js, three.module.min.js
 ```
 
-`main.js` bindet `hero-scene.js` und `ScrollTrigger.min.js` selbst ein, sobald das Gerät
-dafür in Frage kommt — beide stehen deshalb nicht als `<script>` in der HTML.
+Es gibt kein `vendor/` mehr: three.js, GSAP und ScrollTrigger sind entfallen, weil die
+Effekte entfallen sind, für die sie da waren.
 
 ## Design-Konzept
 
@@ -67,8 +66,9 @@ dafür in Frage kommt — beide stehen deshalb nicht als `<script>` in der HTML.
 | Text | `#1d2624`, gedämpft `#4f5c58`, zurückgenommen `#63716c` |
 | Akzent | `#0d7d70` (Petrol) für Flächen, `#0a6157` für Text |
 | Zweitakzent | `#e0913f` (Bernstein) für Flächen, `#9c5f12` für Text |
-| Display-Schrift | Space Grotesk (Headlines, Zahlen, Buttons) |
-| Fließtext | Inter |
+| Überschriften | Fraunces (Serife, variabel, mit optischer Größenachse) |
+| Fließtext & Bedienelemente | Inter |
+| Dunkles Band | `#14201d` mit `#f2efe8` und Petrol `#5dc8b8` |
 
 Die Flächen heißen `--surface-0` bis `--surface-4`: 0 ist die Seite, aufsteigend liegt es
 weiter oben. Jede Farbe, die Text trägt, erreicht auf Papier mindestens 4.5:1 — deshalb gibt
@@ -76,46 +76,43 @@ es zu beiden Akzenten eine dunklere `-ink`-Variante: `--accent` füllt eine Flä
 `--accent-ink` schreibt darauf. Tiefe entsteht über weiche warme Schatten
 (`--shadow-sm/-md/-lg`) statt über harte Kanten.
 
+Zwei Familien mit klaren Rollen: die Serife trägt Überschriften, FAQ-Fragen und Preise,
+die Grotesk alles Funktionale — Labels, Buttons, Formular. Fraunces' geschwungener
+f-Auslauf ist die Grundform der Schrift und lässt sich nicht abschalten; er ist der Grund
+für diese Wahl. Die Achsen `SOFT` und `WONK` stecken nicht im Subset, `opsz` schon.
+
 Typografie und Abstände skalieren über `clamp()`-Tokens mit dem Viewport, das Layout ist
 mobile-first aufgebaut (Breakpoints bei 640 px und 900 px).
 
+### Rhythmus statt Raster
+
+Die erste Fassung reihte über 9.000 Pixel immer dieselbe Figur aneinander — Label,
+Überschrift, Fließtext, Raster aus gleich großen Karten. Das liest sich maschinell.
+Jetzt wechselt die Form je Abschnitt: offener Hero, Leistungen als redaktionelle Zeilen
+mit Trennlinien statt als Kacheln, ein **dunkles Band** für den Ablauf als Kontrastanker,
+das Projekt asymmetrisch mit dominantem Bild. Das Kartenraster gibt es nur noch bei den
+Preisen — dort ist es richtig, weil Pakete vergleichbar nebeneinander stehen sollen.
+
 ## Interaktion
 
-- **Hero-3D** (`hero-scene.js`): Partikelschale aus ~2.000 Punkten in Fibonacci-Verteilung mit
-  eigenem Shader (sanftes „Atmen", Tiefenabblendung, Funkeln), dazu zwei Draht-Ikosaeder und
-  leichte Maus-Parallaxe. Rendert nur, wenn der Hero sichtbar und der Tab aktiv ist;
-  Pixel-Ratio ist auf 2 begrenzt. **Läuft ausschließlich am Desktop**, siehe Performance.
-- **GSAP**: Preloader-Zähler, wortweise einlaufende Headline, gestaffelte Reveals per
-  ScrollTrigger, Parallaxe auf Hero und Projektbildern, Endlos-Laufband, magnetische Buttons,
-  Zähler in der Hero-Statistik.
-- **Ohne JS/GSAP**: Die Seite bleibt vollständig lesbar — Reveals laufen dann über einen
-  IntersectionObserver, bei komplett deaktiviertem JavaScript ist alles sofort sichtbar
+Bewusst zurückhaltend. Entfallen sind Partikelkugel, Schlagwort-Laufband, Verlaufswort in
+der Headline, hochzählende Kennzahlen, Preloader, eigener Mauszeiger, Magnet-Buttons und
+Scroll-Parallaxe — jedes davon ein Standardgriff, der die Seite nach Vorlage aussehen ließ.
+
+Übrig bleibt, was Inhalt transportiert:
+
+- **Reveals**: sanftes Einblenden per IntersectionObserver, Gruppen leicht versetzt.
+- **Navigation**: blendet beim Herunterscrollen aus, Fortschrittsbalken, aktiver Abschnitt.
+- **Formular**: Prüfung im Browser mit verknüpften Fehlern und kurzem Rütteln.
+- **`prefers-reduced-motion`**: alles sofort sichtbar, keine Bewegung.
+- **Ohne JavaScript**: die Seite ist vollständig lesbar und das Formular bedienbar
   (`.no-js`-Klasse am `<html>`).
-- **`prefers-reduced-motion`**: schaltet Animationen und die 3D-Szene ab.
 
 ## Performance
 
-Auf dem Handy zählt jedes Kilobyte und jeder Scroll-Frame. Die Seite lädt und rechnet deshalb
-nach Gerät gestaffelt — entschieden wird nicht über die Bildschirmbreite allein, sondern über
-Zeigerart, Viewport, `prefers-reduced-motion` und `navigator.connection.saveData`:
-
-| | Handy / Touch | Desktop |
-|---|---|---|
-| three.js (671 KB) | wird nicht geladen | als `<script type="module">` nachgehängt |
-| ScrollTrigger (42 KB) | wird nicht geladen | von `main.js` nachgeladen |
-| Reveals | IntersectionObserver | ScrollTrigger, gestaffelt |
-| Scroll-Parallaxe (`scrub`) | aus | an |
-| Karten-Spotlight & Tilt | aus | an |
-| Preloader | übersprungen | 0,7 s |
-| `backdrop-filter` auf fixierten Leisten | aus | an |
-
-Das Laufband läuft bewusst überall durch, ohne Sichtbarkeits-Pause: eine solche Pause blieb
-auf iOS beim Momentum-Scrollen gelegentlich hängen. Sie spart auch nichts — im
-Hintergrund-Tab hält der Browser `requestAnimationFrame` von selbst an.
-
-Ergebnis: **rund 280 KB auf dem Handy** statt gut 1 MB, und beim Scrollen bleibt dort im
-Wesentlichen Layout und Compositing übrig. Ohne die 3D-Szene trägt der CSS-Verlauf den Hero
-weiter — es fehlt nichts, es ist nur ruhiger.
+Es gibt keine Fallunterscheidung nach Gerät mehr und keine nachgeladenen Bibliotheken —
+die Seite ist überall gleich leicht: **rund 230 KB in 8 Requests**, davon 113 KB Schriften.
+Zum Vergleich: Mit 3D-Szene und GSAP waren es gut 1 MB.
 
 Das Projektbild liegt in drei Größen vor und wird per `srcset`/`sizes` gewählt
 (700 px ≈ 16 KB, 1200 px ≈ 32 KB, Original 1712 px ≈ 127 KB).
@@ -159,8 +156,8 @@ Tracking-Skripte. Erst beim Absenden des Kontaktformulars werden die Formulardat
 übertragen; der dortige Spam-Schutz kann reCAPTCHA einsetzen. Details stehen in
 `datenschutz.html`. Das Hosting erfolgt über Hostinger.
 
-## Lizenzen der Bibliotheken
+## Lizenzen
 
-- [three.js](https://threejs.org) 0.169.0 — MIT
-- [GSAP](https://gsap.com) 3.12.5 inkl. ScrollTrigger — GSAP Standard License
-- Inter, Space Grotesk — SIL Open Font License 1.1
+Es sind keine Programmbibliotheken mehr eingebunden. Verwendet werden nur zwei Schriften:
+
+- Fraunces, Inter — SIL Open Font License 1.1
