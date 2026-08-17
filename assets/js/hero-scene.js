@@ -62,8 +62,8 @@ function initScene() {
     uTime: { value: 0 },
     uOpacity: { value: 0 },
     uSize: { value: renderer.getPixelRatio() * 2.2 },
-    uColorA: { value: new THREE.Color('#22d3ee') },
-    uColorB: { value: new THREE.Color('#2dd4bf') }
+    uColorA: { value: new THREE.Color('#63b7ae') },
+    uColorB: { value: new THREE.Color('#d4a25f') }
   };
 
   const pointsMat = new THREE.ShaderMaterial({
@@ -124,7 +124,7 @@ function initScene() {
 
   /* ---------- Draht-Ikosaeder ---------- */
   const wireMat = new THREE.MeshBasicMaterial({
-    color: new THREE.Color('#22d3ee'),
+    color: new THREE.Color('#63b7ae'),
     wireframe: true,
     transparent: true,
     opacity: 0
@@ -135,7 +135,7 @@ function initScene() {
   const wireInner = new THREE.Mesh(
     new THREE.IcosahedronGeometry(1.7, 0),
     new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#2dd4bf'),
+      color: new THREE.Color('#d4a25f'),
       wireframe: true,
       transparent: true,
       opacity: 0

@@ -1,7 +1,8 @@
 # Valtro-Webdesign — One-Page-Website
 
-Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign**, 66787 Wadgassen.
-Dunkles Navy/Schwarz-Theme mit Cyan/Teal als Akzent, dezenten 3D-Elementen (Three.js) und
+Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
+Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
+Dunkles Graphit-Theme mit Petrol/Gold als Akzent, dezenten 3D-Elementen (Three.js) und
 scroll-gesteuerten Animationen (GSAP + ScrollTrigger).
 
 ## Ansehen
@@ -37,7 +38,12 @@ Zum Deployen genügt es, den Ordnerinhalt auf einen beliebigen Webspace zu kopie
 ## Struktur
 
 ```
-index.html                  Gesamte Seite (Nav, Hero, Leistungen, Projekte, Kontakt, Footer)
+index.html                  Gesamte Seite (Nav, Hero, Leistungen, Preise, Projekt, FAQ, Kontakt, Footer)
+impressum.html              Anbieterkennzeichnung
+datenschutz.html            Datenschutzerklärung inkl. Formularversand
+danke.html                  Zielseite nach erfolgreichem Formularversand
+robots.txt                  Freigaben für Suchmaschinen-Crawler
+sitemap.xml                 Sitemap für Suchmaschinen
 assets/
   css/
     fonts.css               @font-face für Inter & Space Grotesk
@@ -45,6 +51,7 @@ assets/
   js/
     main.js                 Navigation, Reveals, Zähler, Formular, Cursor, Magnet-Buttons
     hero-scene.js           Three.js-Szene im Hero (ES-Modul)
+  img/                      Projektbilder und Open-Graph-Vorschau
   fonts/                    Vier woff2-Dateien (Variable Fonts, Subsets latin + latin-ext)
   vendor/                   gsap.min.js, ScrollTrigger.min.js, three.module.min.js
 ```
@@ -53,9 +60,9 @@ assets/
 
 | Rolle | Wert |
 |---|---|
-| Hintergrund | `#04060c` → `#0b1120` (Navy-Schwarz, mehrstufig) |
-| Text | `#e8eefc`, gedämpft `#93a4c4` |
-| Akzent | `#22d3ee` (Cyan) → `#2dd4bf` (Teal) |
+| Hintergrund | `#070a0c` → `#182328` (Graphit, mehrstufig) |
+| Text | `#f1f3ef`, gedämpft `#abb8b8` |
+| Akzent | `#63b7ae` (Petrol) → `#d4a25f` (warmes Gold) |
 | Display-Schrift | Space Grotesk (Headlines, Zahlen, Buttons) |
 | Fließtext | Inter |
 
@@ -79,40 +86,40 @@ mobile-first aufgebaut (Breakpoints bei 640 px und 900 px).
 ## Barrierefreiheit
 
 Skip-Link, sichtbarer Fokus-Ring, `aria-expanded`/`aria-controls` am Menü-Button,
-`aria-live` für Formularmeldungen, `aria-invalid` an fehlerhaften Feldern,
-dekorative Grafiken mit `aria-hidden`, Bedienung komplett per Tastatur möglich.
+verknüpfte Inline-Fehler und fokussierbare Fehlerzusammenfassung im Formular,
+`aria-invalid` an fehlerhaften Feldern, dekorative Grafiken mit `aria-hidden` und
+Bedienung komplett per Tastatur.
 
 ## Kontaktformular
 
-Die Validierung (Name, E-Mail, Nachricht, Einwilligung) läuft im Browser. Da die Seite statisch
-ist, wird die fertige Anfrage anschließend an das E-Mail-Programm des Besuchers übergeben
-(`mailto:kontakt@valtro.cloud`).
+Die Validierung (Name, E-Mail, Leistung, Nachricht, Einwilligung) läuft im Browser. Ein optionaler
+Budgetrahmen qualifiziert die Anfrage vor. CTAs aus Leistungen und Preisen wählen die passende
+Leistung automatisch vor. Gültige Anfragen werden per POST an FormSubmit gesendet; Honeypot,
+Zeitprüfung, Blacklist und das dort standardmäßig aktive reCAPTCHA reduzieren Spam.
 
-Für echten Serverversand in `assets/js/main.js` im `submit`-Handler den `mailto`-Block durch
-einen `fetch()`-Aufruf an den gewünschten Endpunkt ersetzen (eigenes PHP-Skript, Formspree,
-Netlify Forms o. ä.) — die Validierung davor kann unverändert bleiben.
+Beim ersten echten Absenden verschickt FormSubmit eine Aktivierungs-E-Mail an
+`kontakt@valtro.cloud`. Erst nach Bestätigung dieses Links werden weitere Anfragen zugestellt.
 
 ## Vor dem Livegang anpassen
 
-1. **Impressum** im Footer: Die in `[eckigen Klammern]` markierten Angaben (Inhaber, Straße,
-   ggf. USt-IdNr.) ergänzen. Ohne vollständige Angaben ist das Impressum nicht rechtskonform.
-2. **Datenschutzerklärung** ergänzen und im Footer verlinken — bei einem Kontaktformular
-   ist sie Pflicht.
-3. **Projektbild Valtro Pay**: Die Kachel erwartet das Logo unter
-   **`assets/img/valtro-pay.png`** — Datei dort ablegen, sonst nichts zu tun. Solange sie fehlt,
-   zeigt die Kachel eine dunkle Fläche (nicht kaputt, nur leer). Empfohlen: etwa 1200 × 900 px
-   oder breiter, dunkler Grund; die Kachel schneidet links und rechts leicht an.
-4. **Weitere Projekte**: Die übrigen fünf Einträge sind Platzhalter mit generierten Verläufen
-   statt Bildern — echte Referenzen eintragen und bei Bedarf `.project__media` auf `<img>`
-   umstellen.
-5. **Domain** in `<link rel="canonical">` und den Open-Graph-Metadaten prüfen.
-6. Optional ein Open-Graph-Bild (1200 × 630) ergänzen und als `og:image` verlinken.
+1. **Formular aktivieren**: Einmal absenden und den Bestätigungslink in der Aktivierungs-E-Mail
+   an `kontakt@valtro.cloud` anklicken.
+2. **Projektbild Valtro Pay**: Das eingebundene Bild liegt unter
+   **`assets/img/valtro-pay.jpg`** und wird unterhalb des sichtbaren Bereichs verzögert geladen.
+   Bei einem Austausch dieselbe dunkle Bildwirkung und ein Seitenverhältnis nahe 3:2 beibehalten.
+3. **Weitere Projekte** erst nach echter Veröffentlichung ergänzen; derzeit wird ausschließlich
+   Valtro Pay als Live-Referenz gezeigt.
+4. **Domain** in Canonical, Open-Graph-Metadaten, `robots.txt` und `sitemap.xml` prüfen.
+5. **Preise und Leistungsumfang** vor Veröffentlichung geschäftlich bestätigen; aktuell sind
+   vier unverbindliche Ab-Preise sowie individuelle Angebote für Shops und Web-Apps hinterlegt.
+6. **Suchmaschinen**: `sitemap.xml` nach dem Livegang in Google Search Console einreichen.
 
 ## Datenschutz
 
-Die Seite lädt **keine** externen Ressourcen: Schriften und Bibliotheken liegen lokal im
-Repository, es gibt keine Requests an Google Fonts oder ein CDN und keine Cookies oder
-Tracking-Skripte.
+Beim normalen Seitenaufruf lädt die Seite **keine** externen Schriften, Bibliotheken oder
+Tracking-Skripte. Erst beim Absenden des Kontaktformulars werden die Formulardaten an FormSubmit
+übertragen; der dortige Spam-Schutz kann reCAPTCHA einsetzen. Details stehen in
+`datenschutz.html`. Das Hosting erfolgt über Hostinger.
 
 ## Lizenzen der Bibliotheken
 
