@@ -2,9 +2,9 @@
 
 Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
 Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
-Helles Papier-Theme mit Petrol als Akzent und Bernstein als Wärme, Serifen-Überschriften
-und einem dunklen Band als Kontrastanker. Ohne Fremdbibliothek: reines HTML, CSS und
-rund 340 Zeilen JavaScript.
+Fast monochrom: warme Grauwerte, dazu genau eine Farbe — sparsam gesetzt. Dazu
+Serifen-Überschriften und ein dunkles Band als Kontrastanker. Ohne Fremdbibliothek:
+reines HTML, CSS und rund 340 Zeilen JavaScript.
 
 ## Ansehen
 
@@ -62,19 +62,33 @@ Effekte entfallen sind, für die sie da waren.
 
 | Rolle | Wert |
 |---|---|
-| Flächen | Seite `#fdfbf7` (warmes Papier), Karten `#ffffff`, Tönung `#f6f2ea` |
-| Text | `#1d2624`, gedämpft `#4f5c58`, zurückgenommen `#63716c` |
-| Akzent | `#0d7d70` (Petrol) für Flächen, `#0a6157` für Text |
-| Zweitakzent | `#e0913f` (Bernstein) für Flächen, `#9c5f12` für Text |
+| Flächen | Seite `#faf9f7`, Karten `#ffffff`, Tönung `#f1efec`, tief `#e6e3de` |
+| Text | `#171716`, gedämpft `#55534e` (7.3:1), zurückgenommen `#6b6862` (5.3:1) |
+| Akzent | `#b3401a` (Rost) — die einzige Farbe der Seite |
+| Fehler | `#8f1d14` (tiefes Karmin, klar vom Akzent getrennt) |
+| Dunkles Band | `#1a1a18` mit `#f5f4f1`, ohne Akzent |
 | Überschriften | Fraunces (Serife, variabel, mit optischer Größenachse) |
 | Fließtext & Bedienelemente | Inter |
-| Dunkles Band | `#14201d` mit `#f2efe8` und Petrol `#5dc8b8` |
 
-Die Flächen heißen `--surface-0` bis `--surface-4`: 0 ist die Seite, aufsteigend liegt es
-weiter oben. Jede Farbe, die Text trägt, erreicht auf Papier mindestens 4.5:1 — deshalb gibt
-es zu beiden Akzenten eine dunklere `-ink`-Variante: `--accent` füllt eine Fläche,
-`--accent-ink` schreibt darauf. Tiefe entsteht über weiche warme Schatten
-(`--shadow-sm/-md/-lg`) statt über harte Kanten.
+Die Flächen heißen `--surface-0` bis `--surface-3`: 0 ist die Seite, aufsteigend liegt es
+weiter oben. Tiefe entsteht über weiche warme Schatten (`--shadow-sm/-md/-lg`) statt über
+harte Kanten.
+
+**Eine Farbe, ein Token.** `#b3401a` trägt Text auf Papier (5.4:1) und Weiß auf sich selbst
+(5.7:1) — deshalb braucht es keine hellere/dunklere Zweitvariante. Der Akzent markiert
+ausschließlich Handlungen und Zustände: Primärbutton, Links, Fokusring, Neukundenband,
+Statuspunkt, Haken in den Preislisten. Abschnitts-Labels, Ziffern und Kicker sind
+neutral — Farbe, die überall steht, sagt nichts mehr.
+
+**Kanaltripel für getönte Flächen.** Durchscheinende Leisten und Verlaufsflächen brauchen
+Zahlenwerte und können `var(--accent)` nicht verwenden. Deshalb steht neben jedem Farbwert
+sein Kanaltripel (`--accent-rgb: 179 64 26`), aus dem sich `rgb(var(--accent-rgb) / .38)`
+bilden lässt. Ein Farbwechsel bleibt dadurch im `:root`-Block; früher waren rund 20
+Literale über das Stylesheet verstreut. Fest bleiben nur zwei Werte: `#0a0a0c` hinter dem
+Valtro-Pay-Bild (fremde Marke) und `#fff`/`#000` in der Druckregel.
+
+Andere Akzente sind der Tausch einer Zeile — geprüft und ebenfalls AA-konform sind
+Tintenblau `#1e4b8f` und Moosgrün `#3f5d3a`.
 
 Zwei Familien mit klaren Rollen: die Serife trägt Überschriften, FAQ-Fragen und Preise,
 die Grotesk alles Funktionale — Labels, Buttons, Formular. Fraunces' geschwungener
