@@ -110,11 +110,15 @@ Netlify Forms o. ä.) — die Validierung davor kann unverändert bleiben.
    ggf. USt-IdNr.) ergänzen. Ohne vollständige Angaben ist das Impressum nicht rechtskonform.
 2. **Datenschutzerklärung** ergänzen und im Footer verlinken — bei einem Kontaktformular
    ist sie Pflicht.
-3. **Projekte**: Der erste Eintrag (Valtro Pay, `.project--live`) verlinkt auf die echte Seite.
-   Die übrigen fünf Einträge sind Platzhalter mit generierten Verläufen statt Bildern —
-   echte Referenzen eintragen und bei Bedarf `.project__media` auf `<img>` umstellen.
-4. **Domain** in `<link rel="canonical">` und den Open-Graph-Metadaten prüfen.
-5. Optional ein Open-Graph-Bild (1200 × 630) ergänzen und als `og:image` verlinken.
+3. **Projektbild Valtro Pay**: Die Kachel erwartet das Logo unter
+   **`assets/img/valtro-pay.png`** — Datei dort ablegen, sonst nichts zu tun. Solange sie fehlt,
+   zeigt die Kachel eine dunkle Fläche (nicht kaputt, nur leer). Empfohlen: etwa 1200 × 900 px
+   oder breiter, dunkler Grund; die Kachel schneidet links und rechts leicht an.
+4. **Weitere Projekte**: Die übrigen fünf Einträge sind Platzhalter mit generierten Verläufen
+   statt Bildern — echte Referenzen eintragen und bei Bedarf `.project__media` auf `<img>`
+   umstellen.
+5. **Domain** in `<link rel="canonical">` und den Open-Graph-Metadaten prüfen.
+6. Optional ein Open-Graph-Bild (1200 × 630) ergänzen und als `og:image` verlinken.
 
 ## Datenschutz
 
