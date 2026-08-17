@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valtro-Webdesign — Webdesign aus Wadgassen</title>
+<meta name="description" content="Valtro-Webdesign aus 66787 Wadgassen: neue Webseiten erstellen, bestehende Auftritte überarbeiten, Webseiten verwalten und pflegen. Schnell, modern, messbar.">
+<meta name="theme-color" content="#05070d">
+<meta name="author" content="Valtro-Webdesign">
+<link rel="canonical" href="https://valtro.cloud/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Valtro-Webdesign — Webdesign aus Wadgassen">
+<meta property="og:description" content="Digitale Auftritte, die verkaufen: neue Webseiten, Relaunches und laufende Pflege aus dem Saarland.">
+<meta property="og:url" content="https://valtro.cloud/">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23070b14'/%3E%3Cpath d='M24 30l26 42 26-42' fill='none' stroke='%2322d3ee' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<link rel="preload" href="assets/fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Valtro-Webdesign",
+  "description": "Webdesign, Relaunch und Wartung von Webseiten.",
+  "email": "kontakt@valtro.cloud",
+  "telephone": "+4915205498669",
+  "url": "https://valtro.cloud/",
+  "areaServed": "DE",
+  "address": {
+    "@type": "PostalAddress",
+    "postalCode": "66787",
+    "addressLocality": "Wadgassen",
+    "addressCountry": "DE"
+  }
+}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#start">Zum Inhalt springen</a>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <span class="preloader__mark">V</span>
+    <div class="preloader__bar"><i></i></div>
+    <span class="preloader__count">0</span>
+  </div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor__ring"></div>
+  <div class="cursor__dot"></div>
+</div>
+
+<!-- Navigation -->
+<header class="nav" id="nav">
+  <div class="shell nav__inner">
+    <a class="logo" href="#start" aria-label="Valtro-Webdesign, zur Startseite">
+      <span class="logo__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 9l9 15 9-15" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="logo__text">Valtro<span>-Webdesign</span></span>
+    </a>
+
+    <nav class="nav__links" id="navLinks" aria-label="Hauptnavigation">
+      <a href="#start" class="nav__link is-active">Start</a>
+      <a href="#leistungen" class="nav__link">Leistungen</a>
+      <a href="#projekte" class="nav__link">Projekte</a>
+      <a href="#kontakt" class="nav__link">Kontakt</a>
+      <a href="#kontakt" class="btn btn--sm nav__cta">Projekt starten</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__progress" id="navProgress"></div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="start">
+    <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__grid" aria-hidden="true"></div>
+
+    <div class="shell hero__inner">
+      <p class="eyebrow reveal"><span class="dot"></span>Webdesign-Studio · 66787 Wadgassen</p>
+
+      <h1 class="hero__title">
+        <span class="line"><span class="word">Digitale</span> <span class="word">Auftritte,</span></span>
+        <span class="line"><span class="word">die</span> <span class="word accent">im&nbsp;Kopf</span> <span class="word">bleiben.</span></span>
+      </h1>
+
+      <p class="hero__lead reveal">
+        Ich baue Webseiten, die schnell laden, auf jedem Gerät gut aussehen und
+        aus Besuchern Anfragen machen — vom ersten Entwurf bis zur laufenden Pflege.
+      </p>
+
+      <div class="hero__actions reveal">
+        <a href="#kontakt" class="btn btn--primary magnetic">
+          <span>Projekt anfragen</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#projekte" class="btn btn--ghost magnetic">Projekte ansehen</a>
+      </div>
+
+      <dl class="hero__stats reveal">
+        <div><dt data-count="48" data-suffix="h">0</dt><dd>Antwort&shy;zeit auf Anfragen</dd></div>
+        <div><dt data-count="100" data-suffix="%">0</dt><dd>Responsive &amp; barriere&shy;arm</dd></div>
+        <div><dt data-count="95" data-suffix="+">0</dt><dd>Ziel-Score bei PageSpeed</dd></div>
+      </dl>
+    </div>
+
+    <a class="hero__scroll" href="#leistungen" aria-label="Weiter zu den Leistungen">
+      <span>Scrollen</span>
+      <i aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marqueeTrack">
+      <span>Webdesign</span><span class="sep">✦</span>
+      <span>Relaunch</span><span class="sep">✦</span>
+      <span>Performance</span><span class="sep">✦</span>
+      <span>SEO-Basis</span><span class="sep">✦</span>
+      <span>Wartung</span><span class="sep">✦</span>
+      <span>Barrierearm</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <section class="section" id="leistungen">
+    <div class="shell">
+      <header class="section__head">
+        <p class="eyebrow reveal"><span class="dot"></span>Leistungen</p>
+        <h2 class="section__title reveal">Drei Wege zu einer Website,<br>die für Sie arbeitet.</h2>
+        <p class="section__lead reveal">
+          Ob Neustart, Auffrischung oder verlässliche Betreuung — Sie bekommen
+          klare Absprachen, feste Preise und einen Ansprechpartner.
+        </p>
+      </header>
+
+      <div class="cards">
+        <article class="card tilt reveal">
+          <span class="card__num">01</span>
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M3 8.5A2.5 2.5 0 015.5 6h13A2.5 2.5 0 0121 8.5v9A2.5 2.5 0 0118.5 20h-13A2.5 2.5 0 013 17.5v-9z" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M7 4v3M12 4v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Neue Webseiten erstellen</h3>
+          <p>Von der Idee zum fertigen Auftritt: Konzept, Design, Umsetzung und Livegang — individuell auf Ihr Angebot zugeschnitten, ohne Baukasten-Look.</p>
+          <ul class="card__list">
+            <li>Individuelles Design &amp; Struktur</li>
+            <li>Mobile-first umgesetzt</li>
+            <li>Technische SEO-Grundlagen</li>
+            <li>Domain, Hosting &amp; Livegang</li>
+          </ul>
+          <a class="card__link" href="#kontakt">Anfragen<i aria-hidden="true">→</i></a>
+        </article>
+
+        <article class="card tilt reveal">
+          <span class="card__num">02</span>
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0113.5-5.8L21 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 11a8 8 0 01-13.5 5.8L3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 5v5h-5M3 19v-5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Bestehende Webseiten überarbeiten</h3>
+          <p>Ihre Seite ist in die Jahre gekommen? Ich modernisiere Design, Tempo und Bedienung — meist ohne alles neu bauen zu müssen.</p>
+          <ul class="card__list">
+            <li>Analyse &amp; klare Empfehlung</li>
+            <li>Redesign im neuen Look</li>
+            <li>Ladezeit &amp; Mobil-Optimierung</li>
+            <li>Inhalte neu geordnet</li>
+          </ul>
+          <a class="card__link" href="#kontakt">Anfragen<i aria-hidden="true">→</i></a>
+        </article>
+
+        <article class="card tilt reveal">
+          <span class="card__num">03</span>
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" stroke="currentColor" stroke-width="1.6"/><path d="M19.4 14.5a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1.03 1.56V21a2 2 0 11-4 0v-.1A1.7 1.7 0 008.9 19.3a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.34-1.87 1.7 1.7 0 00-1.56-1.03H3a2 2 0 110-4h.1a1.7 1.7 0 001.56-1.1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001-1.56V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.56 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9a1.7 1.7 0 001.56 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Verwalten &amp; pflegen</h3>
+          <p>Updates, Backups, kleine Änderungen: Ihre Seite bleibt sicher, aktuell und erreichbar — Sie kümmern sich um Ihr Geschäft.</p>
+          <ul class="card__list">
+            <li>Updates &amp; Sicherheits-Checks</li>
+            <li>Regelmäßige Backups</li>
+            <li>Text- &amp; Bildänderungen</li>
+            <li>Fester Ansprechpartner</li>
+          </ul>
+          <a class="card__link" href="#kontakt">Anfragen<i aria-hidden="true">→</i></a>
+        </article>
+      </div>
+
+      <!-- Ablauf -->
+      <ol class="process">
+        <li class="process__step reveal">
+          <span class="process__idx">01</span>
+          <h4>Gespräch</h4>
+          <p>Kurzes Kennenlernen: Ziel, Zielgruppe, Budget und Zeitrahmen.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__idx">02</span>
+          <h4>Konzept</h4>
+          <p>Struktur und Design-Entwurf — Sie sehen vorab, was Sie bekommen.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__idx">03</span>
+          <h4>Umsetzung</h4>
+          <p>Sauberer Code, schnelle Ladezeiten, Test auf allen Geräten.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__idx">04</span>
+          <h4>Livegang &amp; Pflege</h4>
+          <p>Veröffentlichung, Einweisung und auf Wunsch laufende Betreuung.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PROJEKTE -->
+  <section class="section section--projects" id="projekte">
+    <div class="shell">
+      <header class="section__head section__head--row">
+        <div>
+          <p class="eyebrow reveal"><span class="dot"></span>Projekte</p>
+          <h2 class="section__title reveal">Ausgewählte Arbeiten.</h2>
+        </div>
+        <p class="section__lead reveal">
+          Ein Live-Projekt und typische Arbeiten aus Handwerk, Gastronomie und Dienst&shy;leistung.
+          <em>Nur der mit „Live“ gekennzeichnete Eintrag ist abrufbar — die übrigen sind Platzhalter
+          für Ihre echten Referenzen.</em>
+        </p>
+      </header>
+
+      <div class="grid">
+        <!-- Echtes Projekt: verlinkt auf die Live-Seite -->
+        <a class="project project--live reveal" href="https://valtro-pay.de"
+           target="_blank" rel="noopener" data-visual="pay">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Valtro Pay</h3>
+              <p>Smartes Bezahlen per QR-Code<span class="sr-only"> — öffnet in einem neuen Tab</span></p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i class="is-live">Live</i><i>Eigenprojekt</i></span>
+        </a>
+
+        <a class="project reveal" href="#kontakt" data-visual="a">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Nordlicht Studio</h3>
+              <p>Onepager &amp; Branding</p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i>Webdesign</i><i>2025</i></span>
+        </a>
+
+        <a class="project reveal" href="#kontakt" data-visual="b">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Meisterbau Saar</h3>
+              <p>Relaunch für Handwerksbetrieb</p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i>Relaunch</i><i>2025</i></span>
+        </a>
+
+        <a class="project reveal" href="#kontakt" data-visual="c">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Café Lumen</h3>
+              <p>Website mit Speisekarte</p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i>Gastronomie</i><i>2024</i></span>
+        </a>
+
+        <a class="project reveal" href="#kontakt" data-visual="d">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Praxis Vital</h3>
+              <p>Terminbuchung &amp; Infoportal</p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i>Gesundheit</i><i>2024</i></span>
+        </a>
+
+        <a class="project reveal" href="#kontakt" data-visual="e">
+          <div class="project__media" aria-hidden="true"><span class="project__art"></span></div>
+          <div class="project__body">
+            <div>
+              <h3>Aurum Consulting</h3>
+              <p>Corporate Website</p>
+            </div>
+            <span class="project__arrow" aria-hidden="true">↗</span>
+          </div>
+          <span class="project__tags"><i>Business</i><i>2024</i></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="section section--contact" id="kontakt">
+    <div class="shell">
+      <header class="section__head">
+        <p class="eyebrow reveal"><span class="dot"></span>Kontakt</p>
+        <h2 class="section__title reveal">Erzählen Sie mir<br>von Ihrem Projekt.</h2>
+      </header>
+
+      <div class="contact">
+        <form class="form reveal" id="contactForm" novalidate>
+          <div class="field">
+            <input type="text" id="name" name="name" placeholder=" " autocomplete="name" required>
+            <label for="name">Name</label>
+            <small class="field__error" data-error-for="name"></small>
+          </div>
+
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required>
+            <label for="email">E-Mail</label>
+            <small class="field__error" data-error-for="email"></small>
+          </div>
+
+          <div class="field">
+            <textarea id="message" name="message" rows="6" placeholder=" " required></textarea>
+            <label for="message">Nachricht</label>
+            <small class="field__error" data-error-for="message"></small>
+          </div>
+
+          <label class="check">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <span class="check__box" aria-hidden="true"></span>
+            <span>Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage verwendet werden.</span>
+          </label>
+          <small class="field__error" data-error-for="privacy"></small>
+
+          <button type="submit" class="btn btn--primary btn--full magnetic">
+            <span>Nachricht senden</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="contact__info reveal">
+          <a class="info" href="mailto:kontakt@valtro.cloud">
+            <span class="info__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="info__body"><small>E-Mail</small><strong>kontakt@valtro.cloud</strong></span>
+          </a>
+
+          <a class="info" href="tel:+4915205498669">
+            <span class="info__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 006 6l1.5-2L21 14.5v3a2 2 0 01-2.2 2A16.5 16.5 0 014.5 5.2 2 2 0 016.5 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="info__body"><small>Telefon</small><strong>+49 1520 5498669</strong></span>
+          </a>
+
+          <div class="info info--static">
+            <span class="info__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg>
+            </span>
+            <span class="info__body"><small>Standort</small><strong>66787 Wadgassen, Saarland</strong></span>
+          </div>
+
+          <div class="info info--static">
+            <span class="info__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5.2l3.4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+            <span class="info__body"><small>Erreichbarkeit</small><strong>Mo – Fr, 9 – 18 Uhr</strong></span>
+          </div>
+
+          <div class="contact__note">
+            <span class="pulse" aria-hidden="true"></span>
+            <p><strong>Aktuell freie Kapazitäten.</strong> Antwort in der Regel innerhalb von 48 Stunden — auch am Wochenende.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" id="impressum">
+  <div class="shell">
+    <div class="footer__top">
+      <a class="logo logo--footer" href="#start">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M7 9l9 15 9-15" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="logo__text">Valtro<span>-Webdesign</span></span>
+      </a>
+      <p class="footer__claim">Webseiten aus dem Saarland — gebaut für Menschen, gefunden von Suchmaschinen.</p>
+    </div>
+
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h5>Impressum</h5>
+        <p>
+          Angaben gemäß § 5 DDG<br>
+          <strong>Valtro-Webdesign</strong><br>
+          Inhaber: <span class="ph">[Vor- und Nachname]</span><br>
+          <span class="ph">[Straße und Hausnummer]</span><br>
+          66787 Wadgassen<br>
+          Deutschland
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h5>Kontakt</h5>
+        <p>
+          Telefon: <a href="tel:+4915205498669">+49 1520 5498669</a><br>
+          E-Mail: <a href="mailto:kontakt@valtro.cloud">kontakt@valtro.cloud</a><br>
+          Web: <a href="https://valtro.cloud">valtro.cloud</a>
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h5>Rechtliches</h5>
+        <p>
+          USt-IdNr.: <span class="ph">[falls vorhanden]</span><br>
+          Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:<br>
+          <span class="ph">[Vor- und Nachname, Anschrift wie oben]</span>
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h5>Navigation</h5>
+        <nav aria-label="Footer-Navigation">
+          <a href="#start">Start</a><br>
+          <a href="#leistungen">Leistungen</a><br>
+          <a href="#projekte">Projekte</a><br>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer__legal">
+      <p>Hinweis zur Streitbeilegung: Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungs&shy;verfahren vor einer Verbraucher&shy;schlichtungsstelle teilzunehmen. Die in <span class="ph">[eckigen Klammern]</span> markierten Angaben bitte vor dem Livegang ergänzen.</p>
+    </div>
+
+    <div class="footer__bottom">
+      <small>© <span id="year">2026</span> Valtro-Webdesign. Alle Rechte vorbehalten.</small>
+      <a href="#start" class="footer__up">Nach oben <i aria-hidden="true">↑</i></a>
+    </div>
+  </div>
+</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./assets/vendor/three.module.min.js"
+  }
+}
+</script>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script type="module" src="assets/js/hero-scene.js"></script>
+</body>
+</html>
