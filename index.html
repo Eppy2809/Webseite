@@ -495,12 +495,9 @@
       </header>
 
       <div class="contact">
-        <form class="form reveal" id="contactForm" action="https://formsubmit.co/kontakt@valtro.cloud" method="POST" novalidate>
-          <input type="hidden" name="_subject" value="Neue Projektanfrage über valtro-webdesign.de">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://valtro-webdesign.de/danke.html">
-          <input type="hidden" name="_blacklist" value="viagra, casino, crypto investment, guaranteed profit, backlink, guest post">
-          <input type="text" name="_honey" class="form__honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <form class="form reveal" id="contactForm" action="/api/contact" method="POST" novalidate>
+          <input type="hidden" name="started_at" id="formStartedAt" value="">
+          <input type="text" name="website" class="form__honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form__summary" id="formSummary" role="alert" tabindex="-1" hidden>
             <strong>Bitte prüfen Sie Ihre Angaben:</strong>
             <ul></ul>
@@ -561,7 +558,7 @@
           </button>
 
           <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
-          <p class="form__security">Spam-Schutz durch Honeypot, Zeitprüfung und reCAPTCHA. Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.</p>
+          <p class="form__security">Verschlüsselte Übertragung an den eigenen Server. Spam-Schutz durch Honeypot, Zeitprüfung, serverseitige Prüfung und Anfragelimit.</p>
         </form>
 
         <aside class="contact__info reveal">

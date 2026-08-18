@@ -1,10 +1,11 @@
 # Valtro-Webdesign — One-Page-Website
 
-Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
+Responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
 Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
 Plakative Bildsprache: fette Groteske für Überschriften, dunkle Vollformat-Bänder im Wechsel
 mit hellen Abschnitten, dazu ein einzelnes Signal-Orange als wiederkehrendes Flächenmotiv.
-Ohne Fremdbibliothek: reines HTML, CSS und rund 340 Zeilen JavaScript.
+Ohne Fremdbibliothek im Frontend: HTML, CSS und JavaScript sowie ein kleiner selbst
+gehosteter Python-Dienst für das Kontaktformular.
 
 ## Ansehen
 
@@ -33,8 +34,8 @@ npx live-server
 
 ### Veröffentlichen
 
-Zum Deployen genügt es, den Ordnerinhalt auf einen beliebigen Webspace zu kopieren
-(oder GitHub Pages / Netlify / Vercel auf das Repository zeigen zu lassen).
+Die öffentlichen Dateien werden mit `deploy/deploy-static.sh` veröffentlicht. Servercode,
+Konfigurationen und Zugangsdaten werden bewusst nicht in das Webverzeichnis kopiert.
 
 ## Struktur
 
@@ -53,6 +54,8 @@ assets/
     main.js                 Navigation, Reveals, Formularprüfung, Countdown
   img/                      Logo, Open-Graph-Vorschau, Projektbild in drei Größen
   fonts/                    Vier woff2-Dateien (Variable Fonts, Subsets latin + latin-ext)
+server/                     Selbst gehosteter Kontaktformular-Dienst und Tests
+deploy/                     Nginx-, Systemd-, Backup- und Deployment-Dateien
 ```
 
 Es gibt kein `vendor/` mehr: three.js, GSAP und ScrollTrigger sind entfallen, weil die
@@ -145,18 +148,20 @@ Bedienung komplett per Tastatur.
 
 ## Kontaktformular
 
-Die Validierung (Name, E-Mail, Leistung, Nachricht, Einwilligung) läuft im Browser. Ein optionaler
-Budgetrahmen qualifiziert die Anfrage vor. CTAs aus Leistungen und Preisen wählen die passende
-Leistung automatisch vor. Gültige Anfragen werden per POST an FormSubmit gesendet; Honeypot,
-Zeitprüfung, Blacklist und das dort standardmäßig aktive reCAPTCHA reduzieren Spam.
+Die Validierung (Name, E-Mail, Leistung, Nachricht, Datenschutzhinweis) läuft im Browser und
+noch einmal unabhängig auf dem eigenen Server. CTAs aus Leistungen und Preisen wählen die
+passende Leistung automatisch vor. Gültige Anfragen werden nur an `/api/contact` gesendet.
+Honeypot, Zeitprüfung, Herkunftsprüfung, Größenlimit, serverseitige Validierung und zwei
+Anfragelimits reduzieren Spam. Es werden weder FormSubmit noch reCAPTCHA eingesetzt.
 
-Beim ersten echten Absenden verschickt FormSubmit eine Aktivierungs-E-Mail an
-`kontakt@valtro.cloud`. Erst nach Bestätigung dieses Links werden weitere Anfragen zugestellt.
+Der Python-Dienst stellt Nachrichten per TLS über das konfigurierte E-Mail-Postfach zu.
+Vorübergehende Zustellfehler liegen maximal sieben Tage in einer nur für den Dienst lesbaren
+Warteschlange. Systemd startet den Dienst neu und versucht die Zustellung regelmäßig erneut.
 
 ## Vor dem Livegang anpassen
 
-1. **Formular aktivieren**: Einmal absenden und den Bestätigungslink in der Aktivierungs-E-Mail
-   an `kontakt@valtro.cloud` anklicken.
+1. **Formular konfigurieren**: SMTP-Daten ausschließlich in `/etc/valtro-contact.env`
+   hinterlegen und den internen Healthcheck erfolgreich prüfen.
 2. **Projektbild Valtro Pay**: Das Bild liegt als `valtro-pay.jpg` (Original),
    `valtro-pay-1200.jpg` und `valtro-pay-700.jpg` in `assets/img/` und wird unterhalb des
    sichtbaren Bereichs verzögert geladen. Bei einem Austausch alle drei Größen neu erzeugen,
@@ -171,8 +176,8 @@ Beim ersten echten Absenden verschickt FormSubmit eine Aktivierungs-E-Mail an
 ## Datenschutz
 
 Beim normalen Seitenaufruf lädt die Seite **keine** externen Schriften, Bibliotheken oder
-Tracking-Skripte. Erst beim Absenden des Kontaktformulars werden die Formulardaten an FormSubmit
-übertragen; der dortige Spam-Schutz kann reCAPTCHA einsetzen. Details stehen in
+Tracking-Skripte. Das Kontaktformular überträgt Daten ausschließlich verschlüsselt an den
+eigenen Server; externe Formular- oder CAPTCHA-Dienste sind nicht beteiligt. Details stehen in
 `datenschutz.html`. Das Hosting erfolgt über Hostinger.
 
 ## Lizenzen

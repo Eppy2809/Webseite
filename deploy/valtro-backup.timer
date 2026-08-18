@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Valtro-Webdesign backup
+
+[Timer]
+OnCalendar=*-*-* 03:25:00
+Persistent=true
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target
