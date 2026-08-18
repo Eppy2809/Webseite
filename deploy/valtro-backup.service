@@ -11,4 +11,4 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectHome=read-only
 ProtectSystem=strict
-ReadWritePaths=/var/backups/valtro-webdesign
+ReadWritePaths=/var/backups
