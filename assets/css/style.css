@@ -537,6 +537,53 @@ h1, h2, h3, h4, h5 {
 .service__link:hover i { transform: translateX(5px); }
 
 /* =========================================================
+   Lokaler Schwerpunkt — sachlich, nicht wie ein Werbekarten-Raster
+   ========================================================= */
+.section--local {
+  border-block: 1px solid var(--line-strong);
+  background:
+    linear-gradient(125deg, rgb(var(--accent-rgb) / .07), transparent 42%),
+    var(--surface-2);
+}
+
+.local-grid {
+  display: grid;
+  border-top: 1px solid var(--line-strong);
+}
+
+.local-point {
+  position: relative;
+  padding: clamp(1.7rem, 4vw, 2.7rem) 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.local-point__idx {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--accent);
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+.local-point h3 { font-size: var(--step-1); }
+.local-point p {
+  max-width: 42ch;
+  margin-top: .65rem;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.local-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.6rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.local-actions .service__link { margin-top: 0; }
+
+/* =========================================================
    Ablauf — dunkles Band
    ========================================================= */
 /* Die Seite ist durchgehend hell. Ein dunkler Abschnitt in der Mitte
@@ -1286,6 +1333,10 @@ a.info:hover {
 @media (min-width: 900px) {
   .process { grid-template-columns: repeat(4, 1fr); column-gap: 2.5rem; }
   .service { grid-template-columns: 5rem minmax(0, 1fr); }
+  .local-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line-strong); }
+  .local-point { padding-inline: clamp(1.4rem, 3vw, 2.5rem); border-right: 1px solid var(--line-strong); border-bottom: 0; }
+  .local-point:first-child { padding-left: 0; }
+  .local-point:last-child { padding-right: 0; border-right: 0; }
   .work { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
   .work__facts > div { grid-template-columns: 8.5rem minmax(0, 1fr); align-items: baseline; }
   .section__head--row { grid-template-columns: 1.1fr 1fr; }
