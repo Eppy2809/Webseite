@@ -14,6 +14,9 @@
   --error-rgb: 143 29 20;
   --shadow-rgb: 38 37 35;
   --band-text-rgb: 245 244 241;
+  /* Plakat-Orange: kräftiger als --accent, rein dekorativ (Flächen, Marker),
+     nie für Text — deshalb ohne eigene Kontrastprüfung. */
+  --mark-rgb: 232 91 38;
 
   /* Flächen: 0 ist die Seite, aufsteigend liegt es weiter oben/kräftiger */
   --surface-0: rgb(var(--surface-0-rgb));
@@ -36,6 +39,7 @@
   --accent-glow: rgb(var(--accent-rgb) / .30);
   --on-accent: #ffffff;
   --error: rgb(var(--error-rgb));
+  --mark: rgb(var(--mark-rgb));
 
   /* Dunkles Band — eigener kleiner Satz, damit der Abschnitt nicht
      jede Regel einzeln überschreiben muss. */
@@ -49,9 +53,10 @@
   --shadow-md: 0 16px 38px -20px rgb(var(--shadow-rgb) / .30);
   --shadow-lg: 0 30px 64px -32px rgb(var(--shadow-rgb) / .36);
 
-  /* Typo — Serife für Überschriften und Zahlen, Grotesk für alles
-     Funktionale (Labels, Buttons, Formulare). Zwei Familien, klare Rollen. */
-  --font-display: "Fraunces", Georgia, "Iowan Old Style", Palatino, serif;
+  /* Typo — plakative Groteske für Überschriften, klare Groteske für alles
+     Funktionale (Fließtext, Labels, Buttons, Formulare). Zwei Familien,
+     klare Rollen: eine schreit, eine liest sich ruhig durch. */
+  --font-display: "Anton", "Arial Narrow Bold", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   --step--1: clamp(.8rem, .77rem + .15vw, .875rem);
@@ -65,8 +70,8 @@
   --shell: 1240px;
   --gutter: clamp(1.15rem, 4vw, 3rem);
   --section-y: clamp(5rem, 9vw, 9.5rem);
-  --radius: 20px;
-  --radius-lg: 28px;
+  --radius: 10px;
+  --radius-lg: 14px;
 
   --ease: cubic-bezier(.22, 1, .36, 1);
   --nav-h: 74px;
@@ -104,17 +109,13 @@ ul, ol { list-style: none; padding: 0; }
 
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
-  font-weight: 600;
-  /* Serifen brauchen mehr Durchschuss als eine Grotesk — 1.08 hätte
-     Unterlängen in die nächste Zeile laufen lassen. */
-  line-height: 1.14;
-  letter-spacing: -.012em;
+  /* Anton liegt nur in einem, bereits sehr fetten Schnitt vor — 600 oder
+     700 anfordern hieße, dass der Browser zusätzlich fake-bold simuliert
+     und die Konturen verdickt. */
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: .002em;
   text-wrap: balance;
-  /* Fraunces trägt eine optische Größenachse: große Zeilen werden feiner
-     gezeichnet, kleine robuster. Die Achsen SOFT und WONK stecken nicht im
-     Subset — der geschwungene f-Auslauf ist die Grundform der Schrift und
-     lässt sich nicht abschalten. Er ist genau der Grund für diese Wahl. */
-  font-optical-sizing: auto;
 }
 
 ::selection { background: var(--accent); color: var(--on-accent); }
@@ -170,14 +171,14 @@ h1, h2, h3, h4, h5 {
   transform: translateY(0);
   transition: transform .35s var(--ease), background .35s var(--ease), backdrop-filter .35s var(--ease), border-color .35s var(--ease);
   border-bottom: 1px solid transparent;
-}
-.nav.is-hidden { transform: translateY(calc(-100% - 2px)); }
-.nav.is-stuck {
+  /* Die Startsektion ist jetzt dunkel — die Leiste braucht von Anfang an
+     eine helle, lesbare Fläche statt erst beim Scrollen aufzublenden. */
   background: rgb(var(--surface-0-rgb) / .82);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border-bottom-color: var(--line);
 }
+.nav.is-hidden { transform: translateY(calc(-100% - 2px)); }
+.nav.is-stuck { border-bottom-color: var(--line); }
 
 .nav__inner {
   position: relative;
@@ -283,7 +284,7 @@ h1, h2, h3, h4, h5 {
   gap: .6rem;
   padding: .95rem 1.6rem;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
+  border-radius: 4px;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: .95rem;
@@ -344,6 +345,24 @@ h1, h2, h3, h4, h5 {
   color: var(--faint);
   margin-bottom: 1.1rem;
 }
+.eyebrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  flex: none;
+  background: var(--mark);
+}
+.band .eyebrow::before,
+.hero .eyebrow::before { background: var(--mark); }
+
+/* Wiederkehrendes Plakat-Motiv: ein einzelnes Farbquadrat, nie Text,
+   nie Symbol — nur Fläche. Setzt Akzente an Ecken und neben Titeln. */
+.mark-block {
+  display: block;
+  width: clamp(2rem, 4vw, 3.4rem);
+  aspect-ratio: 1;
+  background: var(--mark);
+}
 
 .section { padding-block: var(--section-y); position: relative; }
 .section__head { max-width: 720px; margin-bottom: clamp(2.6rem, 5vw, 4.5rem); }
@@ -376,20 +395,43 @@ h1, h2, h3, h4, h5 {
   padding-bottom: clamp(4rem, 9vh, 7rem);
   overflow: hidden;
   isolation: isolate;
+  background: var(--band);
+  color: var(--band-text);
 }
+.hero .eyebrow { color: var(--band-muted); }
+.hero__lead { color: var(--band-muted) !important; }
+.hero__meta {
+  color: var(--band-muted) !important;
+  border-top-color: var(--band-line) !important;
+}
+.hero__meta li::before { background: var(--band-muted); }
 
-
-
-
+.hero__mark {
+  position: absolute;
+  /* Die Hero-Sektion liegt am Dokumentanfang, die fixe Navigation deckt
+     ihre obersten ~74px dauerhaft ab — anders als bei den späteren
+     Bändern reicht hier ein einfacher Row-Abstand nicht. */
+  top: calc(var(--nav-h) + clamp(1.2rem, 3.5vw, 2.4rem));
+  right: var(--gutter);
+  z-index: 1;
+}
+.hero .btn--ghost {
+  background: transparent;
+  color: var(--band-text);
+  border-color: var(--band-line);
+  box-shadow: none;
+}
+.hero .btn--ghost:hover {
+  border-color: var(--mark);
+  color: var(--mark);
+}
 
 .hero__inner { position: relative; }
 
 .hero__title {
   font-size: var(--step-4);
-  font-weight: 600;
-  letter-spacing: -.022em;
-  line-height: 1.06;
-  max-width: 19ch;
+  line-height: .95;
+  max-width: 17ch;
 }
 
 .hero__lead {
@@ -503,10 +545,16 @@ h1, h2, h3, h4, h5 {
   background: var(--band);
   color: var(--band-text);
   padding-block: var(--section-y);
+  position: relative;
 }
 .band .eyebrow { color: var(--band-muted); }
 .band__head { max-width: 640px; margin-bottom: clamp(2.4rem, 5vw, 4rem); }
 .band__title { font-size: var(--step-3); color: var(--band-text); }
+.band__mark {
+  position: absolute;
+  top: clamp(1.6rem, 5vw, 3rem);
+  right: var(--gutter);
+}
 
 .process { display: grid; gap: 0; }
 .process__step {
@@ -544,7 +592,7 @@ h1, h2, h3, h4, h5 {
   color: rgb(var(--text-rgb) / .05);
   font-family: var(--font-display);
   font-size: clamp(8rem, 20vw, 18rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   pointer-events: none;
 }
@@ -564,7 +612,7 @@ h1, h2, h3, h4, h5 {
   letter-spacing: .16em;
   text-transform: uppercase;
 }
-.offer h2 { font-size: clamp(1.7rem, 4vw, 3rem); letter-spacing: -.035em; }
+.offer h2 { font-size: clamp(1.7rem, 4vw, 3rem); }
 .offer__copy > p:last-child { margin-top: .7rem; color: var(--muted); }
 .offer__action { display: grid; gap: .75rem; justify-items: start; }
 .offer__countdown {
@@ -659,7 +707,7 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
 }
 .price-card__price > span { color: var(--faint); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
-.price-card__price strong { font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; letter-spacing: -.045em; }
+.price-card__price strong { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 400; line-height: 1; }
 .price-card__price small { color: var(--faint); font-size: .78rem; }
 .price-card__offer {
   margin: -1rem 0 1.25rem;
@@ -716,18 +764,49 @@ h1, h2, h3, h4, h5 {
 /* =========================================================
    Projekt — eine Arbeit, die Platz bekommt
    ========================================================= */
+/* Dunkles Vollformat, wie das Ablauf-Band — die einzige veröffentlichte
+   Arbeit bekommt denselben Plakat-Auftritt wie die Startsektion. */
+.section--projects {
+  background: var(--band);
+  color: var(--band-text);
+  position: relative;
+}
+.section--projects .eyebrow { color: var(--band-muted); }
+.section--projects .section__title { color: var(--band-text); }
+.section--projects .section__lead { color: var(--band-muted); }
+
+.section--projects__mark {
+  position: absolute;
+  top: clamp(1.6rem, 5vw, 3rem);
+  left: var(--gutter);
+}
+
 .work { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: start; }
 
 .work__media {
+  position: relative;
   display: block;
   overflow: hidden;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--band-line);
   border-radius: var(--radius-lg);
   background: #0a0a0c;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
-.work__media img { width: 100%; height: auto; }
+.work__media img {
+  width: 100%;
+  height: auto;
+  /* Dokumentarischer Grauton statt Farbfoto — dieselbe Bildsprache wie
+     das Plakat-Vorbild, unabhängig vom Motiv. */
+  filter: grayscale(1) contrast(1.1) brightness(.95);
+}
+.work__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, rgb(10 10 12 / .15), rgb(10 10 12 / .4));
+  pointer-events: none;
+}
 .work__media:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
 .work__label {
@@ -735,17 +814,17 @@ h1, h2, h3, h4, h5 {
   font-weight: 600;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--mark);
 }
-.work__body h3 { font-size: var(--step-3); margin-top: .6rem; }
-.work__lead { color: var(--muted); font-size: var(--step-1); margin-top: .5rem; }
+.work__body h3 { font-size: var(--step-3); margin-top: .6rem; color: var(--band-text); }
+.work__lead { color: var(--band-muted); font-size: var(--step-1); margin-top: .5rem; }
 
 .work__facts {
   display: grid;
   gap: .9rem;
   margin: 1.8rem 0;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--line-strong);
+  border-top: 1px solid var(--band-line);
 }
 .work__facts > div { display: grid; gap: .15rem; }
 .work__facts dt {
@@ -753,9 +832,20 @@ h1, h2, h3, h4, h5 {
   font-weight: 600;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--band-muted);
 }
-.work__facts dd { color: var(--text); }
+.work__facts dd { color: var(--band-text); }
+
+.section--projects .btn--ghost {
+  background: transparent;
+  color: var(--band-text);
+  border-color: var(--band-line);
+  box-shadow: none;
+}
+.section--projects .btn--ghost:hover {
+  border-color: var(--mark);
+  color: var(--mark);
+}
 
 /* =========================================================
    FAQ
@@ -775,7 +865,7 @@ h1, h2, h3, h4, h5 {
   color: var(--text);
   font-family: var(--font-display);
   font-size: clamp(1.02rem, 2vw, 1.22rem);
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   list-style: none;
 }
@@ -1064,7 +1154,6 @@ a.info:hover {
   font-family: var(--font-display);
   font-size: var(--step-1);
   max-width: 34ch;
-  letter-spacing: -.01em;
 }
 
 .footer__cols {
@@ -1284,7 +1373,7 @@ a.info:hover {
    jedem Scroll-Frame neu zeichnen — das kostet dort mehr als es bringt.
    ========================================================= */
 @media (max-width: 900px) {
-  .nav.is-stuck {
+  .nav {
     background: var(--surface-0);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;

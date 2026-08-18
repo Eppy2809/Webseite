@@ -2,9 +2,9 @@
 
 Statische, vollständig responsive One-Page-Website für **Valtro-Webdesign** mit Angeboten für
 Webseiten, Online-Shops, Web-Apps, Relaunch, Pflege, Hostinger-/WordPress-Unterstützung und Logo-Design.
-Fast monochrom: warme Grauwerte, dazu genau eine Farbe — sparsam gesetzt. Dazu
-Serifen-Überschriften und ein dunkles Band als Kontrastanker. Ohne Fremdbibliothek:
-reines HTML, CSS und rund 340 Zeilen JavaScript.
+Plakative Bildsprache: fette Groteske für Überschriften, dunkle Vollformat-Bänder im Wechsel
+mit hellen Abschnitten, dazu ein einzelnes Signal-Orange als wiederkehrendes Flächenmotiv.
+Ohne Fremdbibliothek: reines HTML, CSS und rund 340 Zeilen JavaScript.
 
 ## Ansehen
 
@@ -47,7 +47,7 @@ robots.txt                  Freigaben für Suchmaschinen-Crawler
 sitemap.xml                 Sitemap für Suchmaschinen
 assets/
   css/
-    fonts.css               @font-face für Fraunces & Inter
+    fonts.css               @font-face für Anton & Inter
     style.css               Design-Tokens, Layout, Komponenten, Breakpoints
   js/
     main.js                 Navigation, Reveals, Formularprüfung, Countdown
@@ -66,8 +66,9 @@ Effekte entfallen sind, für die sie da waren.
 | Text | `#171716`, gedämpft `#55534e` (7.3:1), zurückgenommen `#6b6862` (5.3:1) |
 | Akzent | `#b3401a` (Rost) — die einzige Farbe der Seite |
 | Fehler | `#8f1d14` (tiefes Karmin, klar vom Akzent getrennt) |
-| Dunkles Band | `#1a1a18` mit `#f5f4f1`, ohne Akzent |
-| Überschriften | Fraunces (Serife, variabel, mit optischer Größenachse) |
+| Dunkles Band | `#1a1a18` mit `#f5f4f1` |
+| Plakat-Orange | `#e85b26` — rein dekorativ, nur Flächen, kein Text |
+| Überschriften | Anton (fette, kondensierte Groteske) |
 | Fließtext & Bedienelemente | Inter |
 
 Die Flächen heißen `--surface-0` bis `--surface-3`: 0 ist die Seite, aufsteigend liegt es
@@ -90,22 +91,26 @@ Valtro-Pay-Bild (fremde Marke) und `#fff`/`#000` in der Druckregel.
 Andere Akzente sind der Tausch einer Zeile — geprüft und ebenfalls AA-konform sind
 Tintenblau `#1e4b8f` und Moosgrün `#3f5d3a`.
 
-Zwei Familien mit klaren Rollen: die Serife trägt Überschriften, FAQ-Fragen und Preise,
-die Grotesk alles Funktionale — Labels, Buttons, Formular. Fraunces' geschwungener
-f-Auslauf ist die Grundform der Schrift und lässt sich nicht abschalten; er ist der Grund
-für diese Wahl. Die Achsen `SOFT` und `WONK` stecken nicht im Subset, `opsz` schon.
+Zwei Familien mit klaren Rollen: die fette Groteske trägt Überschriften, FAQ-Fragen und
+Preise, die schmalere Groteske alles Funktionale — Labels, Buttons, Formular. Anton liegt
+nur in einem, bereits sehr fetten Schnitt vor; Überschriften fordern deshalb bewusst
+`font-weight: 400` an, sonst würde der Browser zusätzlich fake-bold simulieren.
+
+Das wiederkehrende Orange-Quadrat (`.mark-block`, `.eyebrow::before`) ist reine Fläche,
+nie Symbol oder Text — es markiert Abschnittsanfänge auf den dunklen Bändern und vor jedem
+Rubriken-Label, ohne selbst etwas zu bedeuten.
 
 Typografie und Abstände skalieren über `clamp()`-Tokens mit dem Viewport, das Layout ist
 mobile-first aufgebaut (Breakpoints bei 640 px und 900 px).
 
 ### Rhythmus statt Raster
 
-Die erste Fassung reihte über 9.000 Pixel immer dieselbe Figur aneinander — Label,
-Überschrift, Fließtext, Raster aus gleich großen Karten. Das liest sich maschinell.
-Jetzt wechselt die Form je Abschnitt: offener Hero, Leistungen als redaktionelle Zeilen
-mit Trennlinien statt als Kacheln, ein **dunkles Band** für den Ablauf als Kontrastanker,
-das Projekt asymmetrisch mit dominantem Bild. Das Kartenraster gibt es nur noch bei den
-Preisen — dort ist es richtig, weil Pakete vergleichbar nebeneinander stehen sollen.
+Die Seite wechselt hell und dunkel im Wechsel statt durchgehend eine Fläche zu bleiben:
+dunkler Hero, helle Leistungen als redaktionelle Zeilen mit Trennlinien statt Kacheln,
+ein **dunkles Band** für den Ablauf, die einzige veröffentlichte Arbeit noch einmal
+dunkel mit Graustufen-Bild und Orange-Akzent, dann wieder hell bis zum Footer. Das
+Kartenraster gibt es nur bei den Preisen — dort ist es richtig, weil Pakete vergleichbar
+nebeneinander stehen sollen.
 
 ## Interaktion
 
@@ -174,4 +179,4 @@ Tracking-Skripte. Erst beim Absenden des Kontaktformulars werden die Formulardat
 
 Es sind keine Programmbibliotheken mehr eingebunden. Verwendet werden nur zwei Schriften:
 
-- Fraunces, Inter — SIL Open Font License 1.1
+- Anton, Inter — SIL Open Font License 1.1
