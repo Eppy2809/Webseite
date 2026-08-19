@@ -67,33 +67,84 @@
     var progress = document.getElementById('navProgress');
     var navLinks = document.querySelectorAll('.nav__link');
     var lastScrollY = window.scrollY || window.pageYOffset;
+    var mobileMenu = window.matchMedia('(max-width: 900px)');
 
-    function closeMenu() {
+    function setMenuState(open, options) {
       if (!links || !burger) return;
-      links.classList.remove('is-open');
-      burger.classList.remove('is-open');
-      burger.setAttribute('aria-expanded', 'false');
-      burger.setAttribute('aria-label', 'Menü öffnen');
-      document.body.classList.remove('is-locked');
+
+      options = options || {};
+      open = Boolean(open && mobileMenu.matches);
+
+      links.classList.toggle('is-open', open);
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+      document.body.classList.toggle('is-locked', open);
+
+      // Unsichtbare Menüpunkte dürfen weder per Tab noch durch
+      // Assistenztechnik erreichbar sein. Auf Desktop bleibt die
+      // Navigation unabhängig vom mobilen Zustand vollständig aktiv.
+      links.inert = mobileMenu.matches && !open;
+      if (mobileMenu.matches && !open) {
+        links.setAttribute('aria-hidden', 'true');
+      } else {
+        links.removeAttribute('aria-hidden');
+      }
+
+      if (open && options.focusFirst) {
+        var firstLink = links.querySelector('a[href]');
+        if (firstLink) window.requestAnimationFrame(function () { firstLink.focus(); });
+      } else if (!open && options.returnFocus) {
+        burger.focus();
+      }
+    }
+
+    function closeMenu(returnFocus) {
+      setMenuState(false, { returnFocus: returnFocus });
     }
 
     if (burger && links) {
+      setMenuState(false);
+
       burger.addEventListener('click', function () {
         if (nav) nav.classList.remove('is-hidden');
-        var open = links.classList.toggle('is-open');
-        burger.classList.toggle('is-open', open);
-        burger.setAttribute('aria-expanded', String(open));
-        burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
-        document.body.classList.toggle('is-locked', open);
+        var open = !links.classList.contains('is-open');
+        setMenuState(open, { focusFirst: open, returnFocus: !open });
       });
 
       links.addEventListener('click', function (e) {
-        if (e.target.closest('a')) closeMenu();
+        if (e.target.closest('a')) closeMenu(true);
       });
 
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeMenu();
+        var open = mobileMenu.matches && links.classList.contains('is-open');
+        if (!open) return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeMenu(true);
+          return;
+        }
+
+        if (e.key === 'Tab') {
+          var focusable = [burger].concat(Array.prototype.slice.call(links.querySelectorAll('a[href]')));
+          var index = focusable.indexOf(document.activeElement);
+          var direction = e.shiftKey ? -1 : 1;
+          var next = index < 0 ? 0 : (index + direction + focusable.length) % focusable.length;
+          e.preventDefault();
+          focusable[next].focus();
+        }
       });
+
+      function syncMenuToViewport() {
+        setMenuState(false);
+      }
+
+      if (mobileMenu.addEventListener) {
+        mobileMenu.addEventListener('change', syncMenuToViewport);
+      } else {
+        mobileMenu.addListener(syncMenuToViewport);
+      }
     }
 
     // Sticky-Zustand + Fortschrittsbalken

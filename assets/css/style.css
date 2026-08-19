@@ -233,37 +233,20 @@ h1, h2, h3, h4, h5 {
   transition: width .1s linear;
 }
 
-/* Wortmarke als Text statt Bilddatei: Die Vorlage zeigt ein reines
-   Typo-Lockup. Als SVG bräuchte es in Pfade konvertierte Schrift —
-   als HTML skaliert es perfekt und kostet keine Datei. */
+/* Offizielle Wortmarke. Die festen Bildmaße verhindern Layout-Sprünge,
+   die CSS-Breite hält sie in jeder Navigationshöhe lesbar. */
 .logo {
   position: relative;
   z-index: 2;
-  display: grid;
-  justify-items: center;
-  gap: .12em;
+  display: flex;
+  align-items: center;
+  width: clamp(7rem, 10vw, 9rem);
   min-height: 44px;
-  align-content: center;
   line-height: 1;
 }
-.logo__word {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
-  letter-spacing: -.03em;
-  text-transform: uppercase;
-  line-height: .9;
-}
-.logo__sub {
-  font-size: clamp(.54rem, 1.1vw, .66rem);
-  font-weight: 600;
-  letter-spacing: .38em;
-  text-indent: .38em; /* Sperrung hängt rechts nach — hier ausgeglichen */
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.logo--footer .logo__word { font-size: clamp(1.7rem, 4vw, 2.4rem); }
-.logo--footer .logo__sub { font-size: clamp(.6rem, 1.3vw, .74rem); }
+.logo__image { width: 100%; height: auto; }
+.logo--footer { width: clamp(11rem, 18vw, 15rem); }
+.logo--footer .logo__image { filter: invert(1); }
 
 .nav__links {
   display: flex;
@@ -757,7 +740,7 @@ h1, h2, h3, h4, h5 {
   letter-spacing: .2em;
   color: var(--faint);
 }
-.process__step h4 { font-size: var(--step-1); margin: .6rem 0 .5rem; }
+.process__step h3 { font-size: var(--step-1); margin: .6rem 0 .5rem; }
 .process__step p { color: var(--muted); font-size: .88rem; line-height: 1.6; }
 
 /* =========================================================
@@ -1238,8 +1221,6 @@ a.info:hover { padding-left: 1rem; }
   padding-top: clamp(3rem, 6vw, 5rem);
   padding-bottom: 2rem;
 }
-.footer .logo__sub { color: var(--band-muted); }
-
 .footer__top {
   display: grid;
   gap: 1.5rem;
@@ -1261,7 +1242,7 @@ a.info:hover { padding-left: 1rem; }
   padding-block: 2.5rem;
   grid-template-columns: 1fr;
 }
-.footer__col h5 {
+.footer__col h2 {
   font-size: .64rem;
   font-weight: 700;
   letter-spacing: .2em;
