@@ -688,6 +688,55 @@ h1, h2, h3, h4, h5 {
 .service__link:hover i { transform: translateX(5px); }
 
 /* =========================================================
+   Lokaler Schwerpunkt — sachlich, nicht als Werbekarten-Raster
+   ========================================================= */
+/* Steht zwischen schwarzem Leistungsband und getöntem Split und
+   bleibt deshalb weiß: drei Bänder in Folge ohne Wechsel würden den
+   Rhythmus der Seite verwischen. */
+.section--local { background: var(--surface-0); }
+
+.local-grid {
+  display: grid;
+  border-top: 2px solid var(--ink);
+}
+.local-point {
+  position: relative;
+  padding: clamp(1.6rem, 3.5vw, 2.4rem) 0;
+  border-bottom: 1px solid var(--line-strong);
+}
+.local-point__idx {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--faint);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: .2em;
+}
+.local-point h3 { font-size: var(--step-1); }
+.local-point p {
+  max-width: 42ch;
+  margin-top: .7rem;
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+.local-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.8rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+/* Der Verweis nutzt das Leistungs-Linkmuster, steht hier aber neben
+   einem Knopf statt am Fuß einer Karte — also ohne dessen Auto-Rand. */
+.local-actions .service__link {
+  margin-top: 0;
+  padding-top: 0;
+  color: var(--ink);
+}
+
+/* =========================================================
    Neukundenaktion — Split mit Grafik, wie der Vision-Block
    ========================================================= */
 .offer {
@@ -1406,6 +1455,10 @@ a.info:hover { padding-left: 1rem; }
 @media (min-width: 900px) {
   .services { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .process { grid-template-columns: repeat(4, 1fr); }
+  .local-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line-strong); }
+  .local-point { padding-inline: clamp(1.4rem, 3vw, 2.5rem); border-right: 1px solid var(--line-strong); border-bottom: 0; }
+  .local-point:first-child { padding-left: 0; }
+  .local-point:last-child { padding-right: 0; border-right: 0; }
   .work { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
   .work__facts > div { grid-template-columns: 8.5rem minmax(0, 1fr); align-items: baseline; }
   .section__head--row { grid-template-columns: 1.1fr 1fr; }

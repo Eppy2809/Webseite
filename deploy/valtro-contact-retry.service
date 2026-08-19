@@ -1,0 +1,29 @@
+[Unit]
+Description=Retry queued Valtro-Webdesign contact messages
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=valtro-contact
+Group=valtro-contact
+EnvironmentFile=/etc/valtro-contact.env
+ExecStart=/usr/bin/python3 /opt/valtro-contact/contact_service.py --retry
+UMask=0077
+StateDirectory=valtro-contact
+StateDirectoryMode=0700
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/valtro-contact
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true

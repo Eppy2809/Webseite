@@ -152,6 +152,9 @@
     var summary = document.getElementById('formSummary');
     var submitButton = form.querySelector('button[type="submit"]');
     var formOpenedAt = Date.now();
+    var startedAt = form.elements.started_at;
+
+    if (startedAt) startedAt.value = String(formOpenedAt);
 
     var rules = {
       name: function (v) {
@@ -239,7 +242,14 @@
       });
     });
 
-    form.addEventListener('submit', function (e) {
+    function resetSubmitButton() {
+      if (!submitButton) return;
+      submitButton.disabled = false;
+      submitButton.removeAttribute('aria-busy');
+      submitButton.querySelector('span').textContent = 'Nachricht senden';
+    }
+
+    form.addEventListener('submit', async function (e) {
       if (status) { status.textContent = ''; status.classList.remove('is-error'); }
 
       var ok = Object.keys(rules).map(validate).every(Boolean);
@@ -254,7 +264,7 @@
       if (summary) summary.hidden = true;
 
       // Bots füllen den unsichtbaren Honeypot häufig aus oder senden sofort ab.
-      if (form.elements._honey.value || Date.now() - formOpenedAt < 2500) {
+      if (form.elements.website.value || Date.now() - formOpenedAt < 2500) {
         e.preventDefault();
         if (status) {
           status.textContent = 'Die Anfrage konnte noch nicht gesendet werden. Bitte versuchen Sie es in einem Moment erneut.';
@@ -263,21 +273,41 @@
         return;
       }
 
+      e.preventDefault();
+
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.setAttribute('aria-busy', 'true');
-        submitButton.querySelector('span').textContent = 'Wird sicher gesendet …';
+        submitButton.querySelector('span').textContent = 'Wird übertragen …';
       }
-      if (status) status.textContent = 'Ihre Anfrage wird sicher übertragen …';
-      // Kein preventDefault: FormSubmit übernimmt Versand, reCAPTCHA und Weiterleitung.
+      if (status) status.textContent = 'Ihre Anfrage wird verschlüsselt übertragen …';
+
+      try {
+        var response = await fetch(form.action, {
+          method: 'POST',
+          body: new URLSearchParams(new FormData(form)),
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin'
+        });
+        var result = await response.json().catch(function () { return {}; });
+
+        if (!response.ok) {
+          throw new Error(result.message || 'Die Anfrage konnte nicht gesendet werden.');
+        }
+
+        window.location.assign('/danke.html');
+      } catch (error) {
+        resetSubmitButton();
+        if (status) {
+          status.textContent = error.message || 'Die Anfrage konnte nicht gesendet werden. Bitte nutzen Sie E-Mail oder WhatsApp.';
+          status.classList.add('is-error');
+        }
+      }
     });
 
-    // Nach Rückkehr von der CAPTCHA-Seite darf der Button nicht gesperrt bleiben.
+    // Nach einer Rückkehr aus dem Browser-Cache darf der Button nicht gesperrt bleiben.
     window.addEventListener('pageshow', function () {
-      if (!submitButton) return;
-      submitButton.disabled = false;
-      submitButton.removeAttribute('aria-busy');
-      submitButton.querySelector('span').textContent = 'Nachricht senden';
+      resetSubmitButton();
     });
   }
 

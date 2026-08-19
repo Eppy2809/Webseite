@@ -1,0 +1,11 @@
+[Unit]
+Description=Retry Valtro-Webdesign contact messages every ten minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+Persistent=true
+RandomizedDelaySec=30s
+
+[Install]
+WantedBy=timers.target
