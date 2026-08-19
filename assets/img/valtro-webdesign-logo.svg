@@ -1,24 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="670" viewBox="0 0 1600 670" fill="none" role="img" aria-labelledby="title desc">
   <title id="title">Valtro Webdesign logo</title>
-  <desc id="desc">Valtro Webdesign wordmark with an interlocking V and W monogram in two greys and the accent colour.</desc>
-  <defs>
-    <linearGradient id="rail-dark" x1="110" y1="54" x2="420" y2="365" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#3a3936"/><stop offset="1" stop-color="#171716"/>
-    </linearGradient>
-    <linearGradient id="rail-mid" x1="270" y1="54" x2="440" y2="365" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6b6862"/><stop offset="1" stop-color="#55534e"/>
-    </linearGradient>
-    <linearGradient id="rail-accent" x1="375" y1="54" x2="945" y2="382" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#c94d21"/><stop offset=".5" stop-color="#b3401a"/><stop offset="1" stop-color="#8f3113"/>
-    </linearGradient>
-  </defs>
+  <desc id="desc">Valtro Webdesign wordmark with an interlocking V and W monogram in black and grey.</desc>
   <!-- Interlocking V/W monogram: strong diagonal rails, modelled after the Valtro Pay visual language. -->
-  <path d="M82 56h110l171 315-55 102L82 56Z" fill="url(#rail-dark)"/>
-  <path d="M344 56h108L308 473H198L344 56Z" fill="url(#rail-mid)"/>
-  <path d="M375 56h108l91 224 76-164h92l76 164 90-224h108L891 390H782l-86-180-86 180H500L375 56Z" fill="url(#rail-accent)"/>
-  <path d="M330 219h72l-36 61-36-61Z" fill="#171716"/>
-  <path d="M352 234h28l-14 24-14-24Z" fill="#c94d21"/>
-  <text x="86" y="632" font-family="Inter, Helvetica, Arial, sans-serif" font-size="116" letter-spacing="-3">
-    <tspan fill="#171716" font-weight="700">Valtro</tspan><tspan fill="#55534e" font-weight="400">–Webdesign</tspan>
+  <path d="M82 56h110l171 315-55 102L82 56Z" fill="#111111"/>
+  <path d="M344 56h108L308 473H198L344 56Z" fill="#7a7a77"/>
+  <path d="M375 56h108l91 224 76-164h92l76 164 90-224h108L891 390H782l-86-180-86 180H500L375 56Z" fill="#111111"/>
+  <path d="M330 219h72l-36 61-36-61Z" fill="#ffffff"/>
+  <path d="M352 234h28l-14 24-14-24Z" fill="#111111"/>
+  <text x="86" y="632" font-family="Inter, Helvetica, Arial, sans-serif" font-size="116" letter-spacing="-4">
+    <tspan fill="#111111" font-weight="900">Valtro</tspan><tspan fill="#7a7a77" font-weight="500">–Webdesign</tspan>
   </text>
 </svg>

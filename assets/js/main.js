@@ -310,7 +310,10 @@
     var year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();
 
-    // Sanftes Scrollen inkl. Offset für die fixe Navigation
+    // Sanftes Scrollen inkl. Offset für die fixe Navigation. Die Höhe
+    // wird gemessen statt geraten: die Leiste trägt jetzt zusätzlich
+    // eine Kopfzeile, die unter 900px entfällt.
+    var header = document.getElementById('nav');
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         var id = a.getAttribute('href');
@@ -318,7 +321,8 @@
         var target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
-        var top = target.getBoundingClientRect().top + window.scrollY - 68;
+        var offset = (header ? header.offsetHeight : 68) + 8;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: top, behavior: reduced ? 'auto' : 'smooth' });
         history.replaceState(null, '', id);
       });
