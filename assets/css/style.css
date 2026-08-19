@@ -479,72 +479,25 @@ h1, h2, h3, h4, h5 {
 /* Getönte Bänder */
 .is-tinted { background: var(--surface-1); }
 
-/* ---------- Selbst erzeugte Bildflächen ----------
-   Stock-Fotos sind aus dieser Umgebung nicht erreichbar, und erfundene
-   Referenzbilder haben auf einer echten Geschäftsseite nichts verloren.
-   Stattdessen monochrome Geometrie, rein aus Verläufen — kein
-   zusätzlicher Request, kein Ladegewicht, jederzeit gegen echte Fotos
-   austauschbar. */
+/* ---------- Bildflächen ----------
+   Stock-Fotos sind aus dieser Umgebung nicht erreichbar. Die Bilder sind
+   deshalb selbst gerendert: Geräterahmen mit echtem Bildschirminhalt —
+   die eigene Seite, Valtro Pay, die Markendateien, die Server-
+   Konfiguration. Graustufen stecken schon in der Datei, nicht in einem
+   Filter: so komprimiert das JPEG besser und der Browser muss zur
+   Laufzeit nichts umrechnen. */
 .art {
-  /* Ein <span> ist von Haus aus inline — ohne display:block fällt die
-     Fläche zusammen, sobald sie nicht absolut positioniert ist. */
   display: block;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  /* Trägt die Fläche, solange das Bild noch nicht da ist */
   background-color: var(--surface-2);
   border: 1px solid var(--line);
-  --art-ink: var(--ink-rgb);
 }
 .is-dark .art {
   background-color: #1c1c1c;
   border-color: var(--band-line);
-  --art-ink: 255 255 255;
-}
-
-/* Punktraster */
-.art--grid {
-  background-image:
-    repeating-linear-gradient(0deg, transparent 0 21px, rgb(var(--art-ink) / .13) 21px 22px),
-    repeating-linear-gradient(90deg, transparent 0 21px, rgb(var(--art-ink) / .13) 21px 22px);
-}
-
-/* Diagonalbänder — greift die V/W-Diagonalen der Marke auf */
-.art--rails {
-  background-image:
-    repeating-linear-gradient(115deg,
-      rgb(var(--art-ink) / .16) 0 12px,
-      transparent 12px 32px);
-}
-
-/* Verschachtelte Rechtecke, von einer Diagonale angeschnitten */
-.art--stack {
-  background-image:
-    repeating-linear-gradient(115deg,
-      rgb(var(--art-ink) / .07) 0 10px,
-      transparent 10px 40px);
-}
-.art--stack::before,
-.art--stack::after {
-  content: "";
-  position: absolute;
-  border: 1px solid rgb(var(--art-ink) / .26);
-}
-.art--stack::before { inset: 13%; }
-.art--stack::after { inset: 27%; background: rgb(var(--art-ink) / .09); }
-
-/* Konzentrische Bögen — als Ringe aus radial-gradient, weil ein
-   conic-gradient mit Ursprung außerhalb der Box je nach Seiten-
-   verhältnis ganz aus dem Bild läuft. */
-.art--arc {
-  background-image:
-    radial-gradient(circle at 22% 100%,
-      transparent 0 28%, rgb(var(--art-ink) / .22) 28% 29.2%, transparent 29.2%),
-    radial-gradient(circle at 22% 100%,
-      transparent 0 46%, rgb(var(--art-ink) / .18) 46% 47.2%, transparent 47.2%),
-    radial-gradient(circle at 22% 100%,
-      transparent 0 64%, rgb(var(--art-ink) / .14) 64% 65.2%, transparent 65.2%),
-    radial-gradient(circle at 22% 100%,
-      rgb(var(--art-ink) / .08) 0 28%, transparent 28%);
 }
 
 /* =========================================================
@@ -1536,7 +1489,9 @@ a.info:hover { padding-left: 1rem; }
     position: static;
     width: 100%;
     margin-top: clamp(2.5rem, 8vw, 3.5rem);
-    aspect-ratio: 16 / 9;
+    /* Kein 16:9-Zuschnitt mehr: das Bild zeigt ein ganzes Gerät, und
+       ein Beschnitt würde ihm oben und unten die Kanten nehmen. */
+    aspect-ratio: auto;
     border-inline: 0;
   }
 }
